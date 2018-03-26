@@ -1,4 +1,5 @@
 # Node.js scheduler push service with workers
+This project is intended as a server-side console component for working with tasks that can be performed as requests are received.
 
 ## Here is my schema
 ![alt text](http://s010.radikal.ru/i311/1711/1f/15d50ba5e2f7.png)
