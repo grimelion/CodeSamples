@@ -1,0 +1,13 @@
+{
+  "development": {
+    "username": "admin",
+    "password": "12345",
+    "database": "playcrawlerdb",
+    "host": "postgres",
+    "port": "5432",
+    "dialect": "postgres",
+    "define": {
+      "timestamps": false
+    }
+  }
+}

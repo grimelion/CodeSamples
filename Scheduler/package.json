@@ -1,0 +1,25 @@
+{
+  "name": "ncube",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "startDB": "redis-server --daemonize yes",
+    "scheduler": "node src/services/scheduler/scheduler.js",
+    "start": "node src/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "child-process-promise": "2.2.1",
+    "faker": "4.1.0",
+    "kue": "0.11.6",
+    "mongodb": "2.2.33",
+    "node-cron": "1.2.1",
+    "node-schedule": "1.2.5"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "6.24.1"
+  }
+}

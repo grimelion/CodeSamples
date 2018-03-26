@@ -1,0 +1,13 @@
+[
+  { "key": "jp", "value": "jp", "flag": "jp", "text": "Japan" },
+  { "key": "it", "value": "it", "flag": "it", "text": "Italy" },
+  { "key": "cn", "value": "cn", "flag": "cn", "text": "China" },
+  { "key": "gb", "value": "gb", "flag": "gb", "text": "England" },
+  { "key": "fr", "value": "fr", "flag": "fr", "text": "France" },
+  { "key": "de", "value": "de", "flag": "de", "text": "Germany" },
+  { "key": "in", "value": "in", "flag": "in", "text": "India" },
+  { "key": "il", "value": "il", "flag": "il", "text": "Israel" },
+  { "key": "ca", "value": "ca", "flag": "ca", "text": "Canada" },
+  { "key": "nl", "value": "nl", "flag": "nl", "text": "Netherlands" },
+  { "key": "us", "value": "us", "flag": "us", "text": "United States" }
+]

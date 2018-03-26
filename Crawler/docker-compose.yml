@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  application:
+    image: registry.nodeart.io/cxs/playcrawler-back:latest
+    build: .
+    environment:
+      PORT: "3022"
+    ports:
+      - "3022:3022"
