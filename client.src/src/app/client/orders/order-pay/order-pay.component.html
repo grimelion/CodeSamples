@@ -1,0 +1,17 @@
+<div>
+  <div style="text-align: right;">
+    <h3>TOTAL: {{orderSummary.price | currency:'USD':true:'1.2-2'}}</h3>
+    <form ngNoForm [action]="toCheckoutUrl" method="post" target="_blank" *ngIf="orderSummary.price">
+      <input type="hidden" name="sid" [value]="toCheckoutId" />
+      <input type="hidden" name="mode" value="2CO" />
+      <input type="hidden" name="li_0_type" value="product" />
+      <input type="hidden" name="currency_code" value="USD" />
+      <input type="hidden" name="li_0_name" [value]="orderSummary.id + ': ' + orderSummary.description.orderTodoText" />
+      <input type="hidden" name="li_0_product_id" [value]="orderSummary.id" />
+      <input type="hidden" name="li_0_price" [value]="orderSummary.price" />
+      <button md-raised-button color="primary" >Checkout</button>
+    </form>
+    <button type="button" md-raised-button color="primary" *ngIf="!orderSummary.price" (click)="doTrial()">Checkout</button>
+  </div>
+</div>
+<ms-loading-overlay [isLoading]="isLoading"></ms-loading-overlay>

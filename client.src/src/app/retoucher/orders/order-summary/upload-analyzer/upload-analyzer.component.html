@@ -1,0 +1,38 @@
+<h4 class="divider">
+  Order files
+</h4>
+<div class="client-used">Client used: {{order.description.uploadType}}</div>
+<div class="client-used">
+  <a target="_blank" [href]="order.orderLink " color="primary" md-raised-button [disabled]="!order.orderLink"><fa name="folder-o"></fa>Check folder</a>
+  <button color="primary" md-raised-button (click)="advancedToggle()">Advanced</button>
+</div>
+<div *ngIf="isAdvanced">
+  <div *ngIf="order.upload.copying">
+    Client's folder: <a target="_blank" [href]="order.upload.copying.link">{{order.upload.copying.name}}</a><br>
+    Folder was saved to: <a target="_blank" [href]="order.orderLink">{{order.upload.copying.copiedToLink}}</a><br>
+    If the folder was not saved, please copy it manually. If you see folder missing frequently, please contact
+    developers and check firebase functions log.
+  </div>
+  <div *ngIf="order.upload.sharing">
+    Client's folder: <a target="_blank" [href]="order.upload.sharing.link">{{order.upload.sharing.name}}</a><br>
+    If the folder was not shared, please email client as soon as possible so he can do it manually. If you see
+    folder not being shared frequently, please contact developers and check firebase functions log.
+  </div>
+  <div *ngIf="order.upload.linking">
+    Link: <a target="_blank" [href]="order.upload.linking.link">{{order.upload.linking.link}}</a><br>
+    Files should be saved to this folder: <a target="_blank" [href]="order.orderLink">{{order.upload.linking.copiedToLink}}</a><br>
+  </div>
+  <div *ngIf="order.upload.uploading">
+    <div *ngIf="order.upload.uploading.files">
+      Files separately in firebase: {{order.upload.uploading.files.length}}<br>
+      <div *ngFor="let item of order.upload.uploading.files"><a target="_blank" [href]="item.link">{{ item.name}}</a><br></div>
+      <br>
+      <br>
+      Folder: <a target="_blank"
+                 [href]="order.orderLink">{{order.upload.uploading.copiedToLink || 'missing'}}</a><br>
+    </div>
+    If the folder does not contain files, please copy them manually. If you see this behaviour frequently, please
+    contact developers and check firebase functions log.
+  </div>
+  <br>
+</div>

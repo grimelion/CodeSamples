@@ -1,0 +1,150 @@
+<div class="page-main">
+    <h3 class="page-header">
+        <fa name="camera"></fa>
+        {{ 'photo_profile' | translate }}
+    </h3>
+    <div class="app-header-description">{{ 'photo_profile_desc' | translate }}</div>
+
+    <md-tab-group class="profile-tab-content">
+        <md-tab>
+            <ng-template md-tab-label>
+                <fa name="picture-o"></fa> {{ 'photo_profile_examples' | translate }}
+            </ng-template>
+            <md-card class="tab-content">
+                <h4><fa name="picture-o"></fa> {{ 'photo_profile_examples' | translate }}</h4>
+              <div class="tab-content-header">{{ 'photo_profile_examples_desc' | translate }}</div>
+              <div class="content divider">
+                    <md-card-content>
+                        <app-image-tool [photos]="photos$ | async" (removed)="onRemovePhoto($event)"></app-image-tool>
+                        <br><br>
+                        <button color="primary" md-raised-button (click)="openUploadExamples()">Add samples</button>
+                        <input id="custom-file-upload" class="custom-file-upload" type="file" multiple value="fileupload" accept="image/jpg, image/jpeg, image/png" (change)="onGalleryPhotos($event)">
+                    </md-card-content>
+                </div>
+                <h4>
+                    <fa name="pencil-square-o"></fa> {{ 'photo_profile_style' | translate }}
+                </h4>
+              <div class="tab-content-header">{{'photo_profile_style_desc' | translate}}</div>
+              <div>
+                    <form novalidate [formGroup]="portfolioForm">
+                        <md-card-content>
+                            <textarea md-input rows="4" cols="40" maxlength="2000" formControlName="note"></textarea>
+                            <br><br><button color="primary" md-raised-button (click)="saveUsersData(portfolioForm.value)">Save</button>
+                        </md-card-content>
+                    </form>
+                </div>
+                <ms-loading-overlay [isLoading]="isLoading" [progress]="progress"></ms-loading-overlay>
+            </md-card>
+        </md-tab>
+        <md-tab>
+            <ng-template md-tab-label>
+                <fa name="sliders"></fa> {{ 'photo_profile_presets_actions' | translate }}
+            </ng-template>
+            <md-card class="tab-content">
+                <md-card-content>
+                    <div>
+                        <h4>
+                            <img class="profile-icon-sm" src="assets/img/lightroom.svg"/><span>{{ 'photo_profile_presets' | translate }}</span>
+                        </h4>
+                        <div class="tab-content-header">{{ 'photo_profile_presets_desc' | translate }}</div>
+                        <md-card-content>
+                            <table>
+                                <tr *ngFor="let file of presets$ | async">
+                                    <td><a [href]="file.url" [download]="file.filename">{{file.name}}</a></td>
+                                    <td>
+                                      {{file.description}}
+                                    </td>
+                                    <td>
+                                        <fa name="trash" style="cursor: pointer" (click)="removeFile('Presets', file.$key)" md-tooltip="Remove file"></fa>
+                                    </td>
+                                </tr>
+                            </table>
+                          <div *ngIf="(presets$ | async)?.length === 0">
+                            You haven't uploaded any presets yet<br><br>
+                          </div>
+                          <button color="primary" md-raised-button (click)="openPresetDialog()">
+                            Add preset
+                          </button>
+                        </md-card-content>
+                    </div>
+                  <div *ngIf="(presets$ | async)?.length === 0" style="border-bottom: 1px solid #dddddd;"></div>
+                    <div>
+                      <br>
+                        <h4>
+                          <img class="profile-icon-sm" src="assets/img/photoshop.svg"/><span>{{ 'photo_profile_actions' | translate }}</span>
+                        </h4>
+                        <div class="tab-content-header">{{ 'photo_profile_actions_desc' | translate }}</div>
+                        <md-card-content>
+                            <table>
+                                <tr *ngFor="let file of actions$ | async">
+                                    <td><a [href]="file.url" [download]="file.filename">{{file.name}}</a></td>
+                                    <td>
+                                      {{file.description}}
+                                    </td>
+                                    <td>
+                                        <fa name="trash" style="cursor: pointer" (click)="removeFile('Actions', file.$key)" md-tooltip="Remove file"></fa>
+                                    </td>
+                                </tr>
+                            </table>
+                          <div *ngIf="(actions$ | async)?.length === 0">
+                            You haven't uploaded any actions yet<br><br>
+                          </div>
+                          <button color="primary" md-raised-button (click)="openActionDialog()">
+                            Add action
+                          </button>
+                        </md-card-content>
+                    </div>
+                </md-card-content>
+            </md-card>
+            <ms-loading-overlay [isLoading]="isLoading"></ms-loading-overlay>
+        </md-tab>
+        <md-tab>
+            <ng-template md-tab-label>
+                <fa name="link"></fa>{{ 'photo_profile_portfolio' | translate }}
+            </ng-template>
+            <md-card class="tab-content">
+                <h4>
+                    <fa name="link"></fa> {{ 'photo_profile_portfolio' | translate }}
+                </h4>
+                <div class="tab-content-header">{{ 'photo_profile_portfolio_desc' | translate }}</div>
+                <div>
+                    <md-card-content>
+                        <form novalidate [formGroup]="portfolioForm">
+                            <md-input-container floatPlaceholder="never">
+                                <label class="profile-label" mdPrefix><fa name="globe"></fa>Portfolio site:</label>
+                                <input mdInput class="new-input" type="url" required formControlName="portfolio">
+                            </md-input-container><br>
+                            <md-input-container floatPlaceholder="never">
+                                <label class="profile-label" mdPrefix><fa name="facebook-official"></fa>Facebook page:</label>
+                                <input mdInput class="new-input" type="url" required formControlName="facebookPage">
+                            </md-input-container><br>
+                            <md-input-container>
+                                <label class="profile-label" mdPrefix><fa name="link"></fa>Additional link: </label>
+                                <input mdInput class="new-input" type="text" required formControlName="additionalProfiles">
+                            </md-input-container>
+                            <br><br><button color="primary" md-raised-button (click)="saveUsersData(portfolioForm.value)">Save</button>
+                        </form>
+                    </md-card-content>
+                </div>
+            </md-card>
+        </md-tab>
+      <md-tab>
+        <ng-template md-tab-label>
+          <fa name="dropbox"></fa> {{ 'photo_profile_dropbox' | translate }}
+        </ng-template>
+        <md-card class="tab-content">
+          <div class="tab-content-header" [innerHTML]="'photo_profile_dropbox_desc' | translate"></div>
+          <div>
+            <md-card-content>
+              <div *ngIf="sharing.link" class="font-size-15">
+                Sharing folder is set to: <a [href]="sharing.link" target="_blank">{{sharing.name || 'link'}}</a>
+              </div>
+              <br>
+              <app-dropbox-select (selected)="shareFolder($event)"></app-dropbox-select>
+            </md-card-content>
+          </div>
+        </md-card>
+        <ms-loading-overlay [isLoading]="isLoading"></ms-loading-overlay>
+      </md-tab>
+    </md-tab-group>
+</div>

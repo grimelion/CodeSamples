@@ -1,0 +1,13 @@
+<!--<tbody [ngClass]="hideColumnsClass">-->
+<thead>
+    <tr>
+        <th *ngFor="let column of _columns; trackBy:column?.id" [style.width.px]="column.width">
+            <span class="name">{{column.name}}</span>
+            <button *ngIf="column.sortable" md-icon-button [color]="column.sort.color" (click)="toggleSort(column)">
+      <!--<md-icon>{{column.sort.icon}}</md-icon>-->
+      <fa  [name]="column.sort.icon"></fa>
+    </button>
+        </th>
+    </tr>
+</thead>
+<ng-content></ng-content>

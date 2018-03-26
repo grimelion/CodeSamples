@@ -1,0 +1,27 @@
+.dialog-inner-relative {
+    display: inline-block;
+    position: relative;
+}
+
+.file-textarea * {
+    vertical-align: top;
+}
+
+.name {
+    padding-right: 38px;
+}
+
+.truncate {
+  line-height: 30px;
+  vertical-align: middle;
+  width: 230px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+}
+//md-input-container {
+//  display: inline-block;
+//  white-space: nowrap;
+//  width: 77%;
+//}

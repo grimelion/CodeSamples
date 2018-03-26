@@ -1,0 +1,106 @@
+<div class="page-main">
+  <h3 class="page-header">
+    <fa name="user"></fa>
+    Profile
+  </h3>
+  <form novalidate (ngSubmit)="sendData()" [formGroup]="profile">
+    <md-card class="card-main" *ngIf="profile">
+      <h4>
+        <fa class="icon-right-margin" name="user"></fa>
+        Main information
+      </h4>
+      <div class="display-name-container" fxLayout="row" fxLayoutAlign="start center">
+        <app-image-picker rounded class="avatar-flex" [imageUrl]="userImagePhotoURL" class="avatar-flex"
+                          (choose)="onUserImageFile($event)" width="100" height="100"
+                          md-tooltip="Choose an image"></app-image-picker>
+        <span class="display-name-content" *ngIf="fullName">{{ fullName }}</span>
+      </div>
+      <h4>
+        <fa class="icon-right-margin" name="unlock-alt"></fa>
+        Email and password
+      </h4>
+      <md-card-content>
+        <div fxLayout="column" fxLayoutAlign="start stretch">
+          <md-input-container floatPlaceholder="never">
+            <label class="profile-label" mdPrefix>Email:</label>
+            <input mdInput type="email" class="new-input" placeholder="user@example.com" required
+                   formControlName="email" pristine>
+            <md-hint class="error" *ngIf="!profile.get('email').valid && profile.get('email').touched">
+              Invalid email
+            </md-hint>
+          </md-input-container>
+          <br>
+        </div>
+        <div fxLayout="column" fxLayoutAlign="start stretch">
+          <md-input-container>
+            <label class="profile-label" mdPrefix>New password:</label>
+            <input mdInput type="password" class="new-input" required formControlName="password">
+            <md-hint class="error" *ngIf="!profile.get('password').valid && profile.get('password').touched">
+              Minimum 6 characters
+            </md-hint>
+          </md-input-container>
+          <md-input-container>
+            <label class="profile-label" mdPrefix>Confirm password:</label>
+            <input mdInput type="password" class="new-input" required formControlName="passwordConfirm">
+            <md-hint class="error"
+                     *ngIf="!profile.get('passwordConfirm').valid && profile.get('passwordConfirm').touched">
+              Passwords are not identical
+            </md-hint>
+          </md-input-container>
+          <br>
+        </div>
+      </md-card-content>
+      <h4>
+        <fa class="icon-right-margin" name="phone"></fa>
+        Contact phone
+      </h4>
+      <md-card-content>
+        <div fxLayout="column" fxLayoutAlign="start stretch">
+          <md-input-container floatPlaceholder="never">
+            <span class="phone-label" mdPrefix>Phone:</span>
+            <input mdInput type="text" class="new-input" placeholder="777-77-77" required formControlName="phone"
+                   pristine>
+            <md-hint class="error" *ngIf="!profile.get('phone').valid && profile.get('phone').touched">
+              Invalid phone
+            </md-hint>
+          </md-input-container>
+          <br>
+        </div>
+      </md-card-content>
+      <h4>
+        <fa class="icon-right-margin" name="credit-card"></fa>
+        Card details
+      </h4>
+      <md-card-content>
+        <div fxLayout="column" fxLayoutAlign="start stretch">
+          <md-input-container floatPlaceholder="never">
+            <span class="card-label" mdPrefix>Card:</span>
+            <input mdInput type="text" class="new-input" required formControlName="card" pristine>
+            <md-hint class="error" *ngIf="!profile.get('card').valid && profile.get('card').touched">
+              Invalid card number
+            </md-hint>
+          </md-input-container>
+          <br>
+        </div>
+      </md-card-content>
+      <h4>
+        <fa name="skype"></fa>
+        Skype:
+      </h4>
+      <md-card-content>
+        <div fxLayout="column" fxLayoutAlign="start stretch">
+          <md-input-container floatPlaceholder="never">
+            <span class="card-label" mdPrefix>Skype nickname: </span>
+            <input mdInput type="text" class="new-input" required formControlName="skype" pristine>
+            <md-hint class="error" *ngIf="!profile.get('skype').valid && profile.get('skype').touched">
+              Invalid skype
+            </md-hint>
+          </md-input-container>
+          <br>
+        </div>
+      </md-card-content>
+      <button color="primary" md-raised-button>Save</button>
+    </md-card>
+  </form>
+  <ms-loading-overlay [isLoading]="isLoading" fixed="true"></ms-loading-overlay>
+</div>

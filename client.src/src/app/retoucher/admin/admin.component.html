@@ -1,0 +1,36 @@
+<md-sidenav-container *ngIf="translationsLoaded$ | async">
+  <ngbox></ngbox>
+  <md-toolbar class="main-toolbar mat-elevation-z2">
+    <div fxHide="false" fxHide.gt-sm>
+      <button (click)="sidenav.open()" md-icon-button>
+        <fa name="bars"></fa>
+      </button>
+    </div>
+
+    <span fxFlex></span>
+
+    <button class="user-button" md-button [mdMenuTriggerFor]="menu">
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <img [src]="(user$ | async)?.photoURL" class="avatar-flex"/>
+        <span fxHide="true" fxHide.gt-sm="false" style="font-weight: 500; margin-left: 5px;">{{(user$ | async)?.displayName}}</span>&nbsp;
+        <fa name="chevron-down" fxHide="true" fxHide.gt-sm="false"></fa>
+      </div>
+    </button>
+
+    <md-menu class="user-menu" x-position="before" y-position="below" #menu="mdMenu">
+      <button md-menu-item routerLink="/profile">
+        <fa name="user"></fa>
+        <span>My Profile</span>
+      </button>
+      <md-divider></md-divider>
+      <button (click)="signOut()" md-menu-item>
+        <fa name="sign-out"></fa>
+        <span>Logout</span>
+      </button>
+    </md-menu>
+  </md-toolbar>
+
+  <div class="main-container" #scrollContainer>
+    <router-outlet (activate)="onActivate($event, scrollContainer)"></router-outlet>
+  </div>
+</md-sidenav-container>

@@ -1,0 +1,17 @@
+a {
+  word-wrap: break-word;
+}
+
+:host {
+  font-size: 14px;
+}
+
+.client-used {
+  padding-bottom: 5px;
+  a {
+    margin-bottom: 5px;
+  }
+  button {
+    margin-bottom: 5px;
+  }
+}

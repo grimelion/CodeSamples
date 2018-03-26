@@ -1,0 +1,20 @@
+<div class="page-main">
+  <h3 class="page-header">
+    <fa name="user"></fa>
+    Clients
+  </h3>
+  <div class="card-main">
+
+    <table class="table column-filter table-hover table-striped table-condensed table-bordered mat-elevation-z2"
+           appSortableTable [columns]="columns" (sort)="onOrderSort($event)" tableName="clients">
+      <tr *ngFor="let item of clients; trackBy: item?.$key" [routerLink]="item?.$key" class="cursor-pointer">
+        <td>{{ item.displayName }}</td>
+        <td>{{ item.email }}</td>
+      </tr>
+    </table>
+    <md-card *ngIf="!clients.length">
+      No clients. Yet.
+    </md-card>
+    <ms-loading-overlay [isLoading]="isLoading"></ms-loading-overlay>
+  </div>
+</div>

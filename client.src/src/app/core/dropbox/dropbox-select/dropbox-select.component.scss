@@ -1,0 +1,29 @@
+.dropbox-btn {
+  background-color: #007ee5;
+  color: white;
+  img {
+    display: inline-block;
+    width: 70px;
+    margin-top: -2px;
+  }
+}
+
+.dropbox-back-button {
+  border: 1px solid #3d4051;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+table {
+  max-width: 445px;
+  tr {
+    cursor: pointer;
+  }
+}
+
+.dropbox-select-button {
+  border: 1px solid #3d4051;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+}

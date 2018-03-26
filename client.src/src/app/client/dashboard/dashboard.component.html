@@ -1,0 +1,24 @@
+<div class="page-main">
+  <h3 class="page-header">
+    <fa name="home"></fa>
+    Dashboard
+  </h3>
+  <md-card class="dashboard-order-card" id="wedding-card">
+    <img [routerLink]="['/orders/wedding/new']" md-card-image
+         src="../../../assets/img/dashboard/wedding.jpg">
+    <md-card-title>{{'wedding_order' | translate}}</md-card-title>
+    <p class="dashboard-order-summary">{{'wedding_order_description' | translate}}</p>
+    <div layout-align="start center">
+      <button color="primary" md-raised-button flex [routerLink]="['/orders/wedding/new']">CREATE</button>
+    </div>
+  </md-card>
+  <md-card class="dashboard-order-card" id="retouching-card">
+    <img [routerLink]="['/orders/retouching/new']" md-card-image
+         src="../../../assets/img/dashboard/retouching.jpg">
+    <md-card-title>{{'retouching_order' | translate}}</md-card-title>
+    <p class="dashboard-order-summary">{{'retouching_order_description' | translate}}</p>
+    <div layout-align="start center">
+      <button color="primary" md-raised-button flex [routerLink]="['/orders/retouching/new']">CREATE</button>
+    </div>
+  </md-card>
+</div>

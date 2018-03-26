@@ -1,0 +1,71 @@
+<md-card *ngIf="order.sampleStatusText">
+  <h4 class="divider">Samples</h4>
+  <md-card-content>
+    <div>
+      <div>
+        <b>Status:</b> <span class="order-status" [style.backgroundColor]="order.sampleColor">{{order.sampleStatusText}}</span>
+      </div>
+      <div *ngIf="order.moderatorSamplesCorrections">
+        <b class="bold-label">Editors's comment:</b>
+        <div class="comment-text">
+          {{ order.moderatorSamplesCorrections }}
+        </div>
+      </div>
+      <div *ngIf="order.retoucherSamplesComment">
+        <b class="bold-label">Retoucher's comment:</b>
+        <div class="comment-text">
+          {{ order.retoucherSamplesComment }}
+        </div>
+      </div>
+      <form novalidate (ngSubmit)="sendOrder(samplesForm, false)" [formGroup]="samplesForm">
+        <br *ngIf="isNoComments">
+        <div><b class="paste-your-link">Paste your link here:</b></div>
+        <md-input-container floatPlaceholder="never" class="width-100">
+          <input type="url" class="new-input" placeholder="Your work url" mdInput type="url" formControlName="retoucherLink">
+          <md-hint class="error" *ngIf="samplesForm.get('retoucherLink').hasError('url') && samplesForm.get('retoucherLink').touched">
+            Invalid url
+          </md-hint>
+        </md-input-container>
+        <button color="primary" md-raised-button [disabled]="!samplesForm.valid">Send samples</button>
+        <a target="_blank" [href]="order.additionalModeratorSamplesLink" color="primary" *ngIf="order.additionalModeratorSamplesLink" md-raised-button><fa name="picture-o"></fa>Moderator's additional samples</a>
+      </form>
+    </div>
+  </md-card-content>
+</md-card>
+<br>
+<md-card *ngIf="order.isApproved">
+  <h4 class="divider">Order</h4>
+  <md-card-content>
+    <div>
+      <div>
+        <div>
+          <b>Status:</b> <span class="order-status" [style.backgroundColor]="order.color">{{order.statusText}}</span>
+        </div>
+        <div *ngIf="order.moderatorCorrections">
+          <b class="bold-label">Editors's comment:</b>
+          <div class="comment-text">
+            {{ order.moderatorCorrections }}
+          </div>
+        </div>
+        <div *ngIf="order.retoucherComment">
+          <b class="bold-label">Retoucher's comment:</b>
+          <div class="comment-text">
+            {{ order.retoucherComment }}
+          </div>
+        </div>
+        <form novalidate (ngSubmit)="sendOrder(orderForm, true)" [formGroup]="orderForm">
+          <br *ngIf="isNoComments">
+          <div><b class="paste-your-link">Paste your link here:</b></div>
+          <md-input-container floatPlaceholder="never" class="width-100">
+            <input type="url" class="new-input" placeholder="Your work url" mdInput type="url" formControlName="retoucherLink">
+            <md-hint class="error" *ngIf="orderForm.get('retoucherLink').hasError('url') && orderForm.get('retoucherLink').touched">
+              Invalid url
+            </md-hint>
+          </md-input-container>
+          <button color="primary" md-raised-button [disabled]="!orderForm.valid">Send order</button>
+          <a target="_blank" [href]="order.additionalModeratorOrderLink" color="primary" *ngIf="order.additionalModeratorOrderLink" md-raised-button><fa name="picture-o"></fa>Moderator's additional images</a>
+        </form>
+      </div>
+    </div>
+  </md-card-content>
+</md-card>

@@ -1,0 +1,27 @@
+
+  <a class="sidenav-anchor" *ngIf="!item.hasSubItems() && !item.external" md-list-item md-ripple [routerLink]="[item.route]" routerLinkActive="active" [id]="item.id" [routerLinkActiveOptions]="{exact: true}">
+
+    <fa [name]="item.icon"></fa>
+    <span class="sidenav-item-name fade-in-on-icon-sidenav">{{ item.name }}</span>
+    <span><!-- fill space --></span>
+    <span class="badge fade-in-on-icon-sidenav" *ngIf="item.badge" [style.background-color]="item.badgeColor">{{ item.badge }}</span>
+  </a>
+
+  <a class="sidenav-anchor" *ngIf="item.hasSubItems() && !item.external" md-list-item md-ripple (click)="toggleDropdown()">
+
+    <fa [name]="item.icon"></fa> {{item.icon}}
+    <span class="sidenav-item-name fade-in-on-icon-sidenav">{{ item.name }}</span>
+    <span><!-- fill space --></span>
+    <span class="badge fade-in-on-icon-sidenav" *ngIf="item.badge" [style.background-color]="item.badgeColor" style="margin-right: 12px;">{{ item.badge }}</span>
+    <fa *ngIf="item.hasSubItems()" name="chevron-down" class="sidenav-item-dropdown-indicator rotate fade-in-on-icon-sidenav"></fa>
+
+  </a>
+
+  <a class="sidenav-anchor" [href]="item.route" target="_blank" *ngIf="item.external" md-list-item md-ripple>
+    <fa [name]="item.icon"></fa>
+    <span class="sidenav-item-name fade-in-on-icon-sidenav">{{ item.name }}</span>
+  </a>
+
+  <md-nav-list class="sidenav-list sidenav-list-nested" [style.height]="getSubItemsHeight()">
+    <ms-sidenav-item *ngFor="let subItem of item.subItems" [item]="subItem"></ms-sidenav-item>
+  </md-nav-list>

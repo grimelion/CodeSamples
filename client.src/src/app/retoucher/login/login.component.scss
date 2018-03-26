@@ -1,0 +1,74 @@
+@import "../../../styles/_var";
+
+:host {
+  display: block;
+  background: #fff url('../../../assets/retoucher/bg.png') repeat;
+  height: 100%;
+  width: 100%;
+}
+
+.login {
+  background: white;
+  width: 380px;
+
+  .login-header {
+    background: #2b303b;
+    padding: 24px;
+    img {
+      height: 50px;
+    }
+  }
+
+  .login-content {
+    padding: 42px 42px 42px;
+
+    md-input-container {
+      width: 100%;
+      margin: 6px 0;
+    }
+
+    .extra-options {
+      margin: 16px 0 32px;
+
+      .remember-me {
+        color: #777;
+      }
+    }
+
+    a {
+      color: #777;
+      text-decoration: underline;
+
+      &:hover {
+        color: #2196F3;
+
+      }
+    }
+
+    .note {
+      color: #777;
+      margin: 24px 0 0;
+      text-align: center;
+    }
+  }
+
+  input.new-input {
+    width: 100%;
+  }
+  .login .mat-input-wrapper {
+    margin-right: 0;
+  }
+
+  .mat-raised-button.mat-primary {
+    background-color: #7ab55c !important;
+
+  }
+  .mat-raised-button.mat-primary:hover {
+    background-color: #6ba151 !important;
+  }
+}
+
+/deep/ md-input-container .mat-input-wrapper {
+  margin: 0;
+  padding-bottom: 6px;
+}

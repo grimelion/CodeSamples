@@ -1,0 +1,10 @@
+<div class="image-upload">
+    <label for="file-input">
+    <div class="overlay" [style.borderRadius]="rounded ? '50%' : '0px'" fxLayout="row" fxLayoutAlign="center center" [class.show]="!(newImageUrl || imageUrl)">
+      <fa  *ngIf="imageUrl" name="files-o"></fa>
+      <fa  *ngIf="!imageUrl" name="plus"></fa>
+    </div>
+    <img style="width: 100px;" [style.borderRadius]="rounded ? '50%' : '0px'" [src]="newImageUrl || imageUrl"/>
+  </label>
+    <input id="file-input" type="file" name="someFiles" (change)="onFileChange($event)" accept="image/x-png,image/gif,image/jpeg" />
+</div>

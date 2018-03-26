@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "client": "retouchingapp",
+    "retoucher": "retouchersimpleProject"
+  }
+}

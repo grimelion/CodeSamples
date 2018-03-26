@@ -1,0 +1,23 @@
+<div>
+  <form enctype="multipart/form-data" novalidate>
+    <div class="drag-n-drop-uploader" fxLayout="row" fxLayoutAlign="center center" [class]='dragThrough' (drop)="onDrop($event)" (dragleave)="onDrop($event)" (dragover)="allowDrop($event)">
+      <div class="drag-n-drop-inner">
+        <input type="file" (change)="onFilesChange($event.target.files)" [multiple]="multiple" [accept]="accept" [disabled]="disabled">
+        <p *ngIf="!uploadedFiles.length">
+          Drag your file{{ multiple ? 's' : '' }} here to begin<br> or click to browse
+        </p>
+          <div class="drag-n-drop-item" *ngFor="let file of uploadedFiles">
+            <div class="overlay">
+              <button class="md-fab" md-icon-button (click)="removeFile(file)" [disabled]="disabled">
+                <fa name="trash"></fa>
+              </button>
+            </div>
+            <div style="margin: 15% auto;">
+              <fa name="file-o" style="font-size: 20px;"></fa><br>
+              <span style="font-size: 14px;">{{ file.name }}</span>
+            </div>
+          </div>
+      </div>
+    </div>
+  </form>
+</div>

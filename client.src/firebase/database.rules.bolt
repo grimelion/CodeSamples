@@ -1,0 +1,257 @@
+path /Files/{uid} {
+  write() { auth.uid == uid }
+  read() { isSigned() }
+}
+
+path /Files/{uid}/Examples/{id} {
+  read() { isSigned() }
+  write() { auth.uid == uid }
+}
+
+path /Files/{uid}/Presets/{id} {
+  read() { isSigned() }
+  write() { auth.uid == uid }
+}
+
+path /Files/{uid}/Actions/{id} {
+  read() { isSigned() }
+  write() { auth.uid == uid }
+}
+
+path /Logs/{uid} {
+  read() { false }
+  write() { auth.uid == uid }
+}
+
+path /Orders {
+  write() { false }
+  read() { false }
+}
+
+path /Orders/Super {
+  read() { isSuper(auth.uid) }
+  write() { false }
+}
+
+path /Orders/Admin/{uid} {
+  read() { auth.uid == uid && isAdmin(auth.uid) }
+  write() { false }
+}
+
+path /Orders/Moderator/{uid} {
+  read() { auth.uid == uid && isModerator(auth.uid) }
+  write() { false }
+}
+
+path /Orders/Retoucher/{uid} {
+  read() { auth.uid == uid && isRetoucher(auth.uid) }
+  write() { false }
+}
+
+path /Orders/Client/{uid} {
+  read() { auth.uid == uid && isSigned() }
+  write() { false }
+}
+
+path /Preferences {
+  write() { isSigned() }
+  read() { isSigned() }
+}
+
+path /Preferences/Notifications/{uid} {
+  read() { auth.uid == uid }
+  write() { auth.uid == uid }
+}
+
+path /Pricing {
+  write() { false }
+  read() { false }
+}
+
+path /Pricing/Client {
+  write() { false }
+  read() { isSigned() }
+}
+
+path /PrivateClientData {
+  write() { false }
+  read() { false }
+}
+
+path /PrivateClientData/{uid} {
+  write() { false }
+  read() { isAdmin(auth.uid) || isModerator(auth.uid) }
+}
+
+path /SuperClientData/{uid} {
+  write() { isSuper(auth.uid) }
+  read() { isSuper(auth.uid) }
+}
+
+path /MailTemplates {
+  write() { isAdmin(auth.uid) }
+  read() { isAdmin(auth.uid) }
+}
+
+path /PublicClientData {
+  write() { false }
+  read() { false }
+}
+
+path /PublicClientData/{uid} {
+  write() { false }
+  read() { isAdmin(auth.uid) || isModerator(auth.uid) || isRetoucher(auth.uid) }
+}
+
+path /Request {
+  write() { isSigned() }
+  read() { false }
+}
+
+path /Request/ClientCheckoutTrial/{uid} {
+  write() { auth.uid == uid && isUser(uid) }
+}
+
+path /Request/ClientOrder/{uid} {
+  write() { auth.uid == uid && isUser(uid) }
+}
+
+path /Request/ClientOrderApprove/{uid} {
+  write() { auth.uid == uid && isUser(uid) }
+}
+
+path /Request/ClientOrderRemove/{uid} {
+  write() { auth.uid == uid && isUser(uid) }
+}
+
+path /Request/SuperApprovePayment/{uid} {
+  write() { auth.uid == uid && isModerator(uid) }
+}
+
+path /Request/ModeratorSetClientProfile/{uid} {
+  write() { auth.uid == uid && isModerator(uid) }
+}
+
+path /Request/AdminSetFinalLinks/{uid} {
+  write() { auth.uid == uid && isModerator(uid) }
+}
+
+path /Request/ModeratorOrderApprove/{uid} {
+  write() { auth.uid == uid && isModerator(uid) }
+}
+
+path /Request/RetoucherAcceptOrder/{uid} {
+  write() { auth.uid == uid && isRetoucher(uid) }
+}
+
+path /Request/RetoucherDissociate/{uid} {
+  write() { auth.uid == uid && isRetoucher(uid) }
+}
+
+path /Request/RetoucherOrderApprove/{uid} {
+  write() { auth.uid == uid && isRetoucher(uid) }
+}
+
+path /Request/AdminRemoveOrder/{uid} {
+  write() { auth.uid == uid && isAdmin(uid) }
+}
+
+path /Request/AdminRemoveFiles/{uid} {
+  write() { auth.uid == uid && isAdmin(uid) }
+}
+
+path /Request/AdminSkipSampleApproval/{uid} {
+  write() { auth.uid == uid && isSuper(uid) }
+}
+
+path /Request/AdminUpdateOrderDates/{uid} {
+  write() { auth.uid == uid && isAdmin(uid) }
+}
+
+path /Request/AdminAssignOrder/{uid} {
+  write() { auth.uid == uid && isAdmin(uid) }
+}
+
+path /Request/AdminSendToClient/{uid} {
+  write() { auth.uid == uid && isAdmin(uid) }
+}
+
+path /Request/SuperUpdateOrderPrice/{uid} {
+  write() { auth.uid == uid && isSuper(uid) }
+}
+
+path /Request/SuperApprovePayment/{uid} {
+  write() { auth.uid == uid && isSuper(uid) }
+}
+
+path /MainFlow {
+  write() { false }
+  read() { false }
+}
+
+path /Retouchers {
+  write() { false }
+  read() { isAdmin(auth.uid) || isModerator(auth.uid) }
+}
+
+path /Retouchers/{uid} {
+  write() { auth.uid == uid }
+  read() { auth.uid == uid }
+}
+
+path /Moderators {
+  write() { false }
+  read() { isAdmin(auth.uid) }
+}
+
+path /Moderators/{uid} {
+  write() { isAdmin(auth.uid) }
+  read() { isAdmin(auth.uid) }
+}
+
+path /Admins {
+  write() { false }
+  read() { isSuper(auth.uid) }
+}
+
+path /Admins/{uid} {
+  write() { isSuper(auth.uid) }
+  read() { isSuper(auth.uid) }
+}
+
+path /Roles {
+  write() { false }
+  read() { isSigned() }
+}
+
+path /Roles/{uid} {
+  write() { false }
+  read() { auth.uid == uid || isAdmin(auth.uid) }
+}
+
+path /SpecialOffers {
+  write() { false }
+  read() { isSigned() }
+}
+
+path /Users {
+  write() { false }
+  read() { isAdmin(auth.uid) }
+}
+
+path /Users/{uid} {
+  write() { auth.uid == uid }
+  read() { auth.uid == uid || isModerator(auth.uid) }
+}
+
+path /Text {
+  read() { true }
+  write() { false }
+}
+
+isUser(uid) { isSigned() }
+isModerator(uid) { isSigned() && prior(root.Roles[uid].isModerator == true) }
+isRetoucher(uid) { isSigned() && prior(root.Roles[uid].isRetoucher == true) }
+isAdmin(uid) { isSigned() && prior(root.Roles[uid].isAdmin == true) }
+isSuper(uid) { isSigned() && prior(root.Roles[uid].isSuper == true) }
+isSigned() { auth != null }

@@ -1,0 +1,58 @@
+:host {
+  display: block;
+}
+
+.order-date {
+  font-size: 14px;
+  padding-top: 3px;
+  i.fa {
+    font-size: 21px;
+    height: 21px;
+    width: 21px;
+  }
+}
+
+.order-summary-card {
+  display: inline-block;
+  width: 260px;
+  margin: 4%;
+  vertical-align: top;
+
+  md-card-title.retoucher-comment {
+    font-size: 18px;
+  }
+}
+
+.retoucher-input.mat-input-infix {
+  display: flex;
+}
+
+.order-summary-header {
+  font-size: 22px;
+  color: #3D4051;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(61, 64, 81, 0.18);
+}
+
+.order-summary-label {
+  width: 150px;
+}
+
+label {
+  display: block;
+  float: left;
+}
+
+.order-summary-input {
+  input {
+    width: 200px;
+    max-width: 400px;
+  }
+}
+
+.order-actions {
+  button {
+    min-width: 200px;
+  }
+}

@@ -1,0 +1,25 @@
+<div class="page-main">
+  <h3 class="page-header">
+    <fa name="envelope-o"></fa>
+    Mail templates
+  </h3>
+  <div class="card-main">
+    <table class="table column-filter table-hover table-striped table-condensed table-bordered mat-elevation-z2"
+           appSortableTable [columns]="columns" (sort)="onOrderSort($event)" tableName="templates">
+      <tr *ngFor="let item of templates; trackBy: item?.$key; let i=index">
+        <td>
+          {{ item.$key }}
+        </td>
+        <td>{{ item.provider }}</td>
+        <td>{{ item.subject }}</td>
+        <td>{{ item.from || 'default' }}</td>
+        <td>{{ item.enabledText }}</td>
+        <td><button color="primary" md-raised-button [routerLink]="item?.$key">Edit</button></td>
+      </tr>
+    </table>
+    <md-card *ngIf="!templates.length">
+      No templates. Too strange.
+    </md-card>
+    <ms-loading-overlay [isLoading]="isLoading"></ms-loading-overlay>
+  </div>
+</div>

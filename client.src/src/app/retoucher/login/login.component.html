@@ -1,0 +1,18 @@
+<div fxLayout="row" fxLayoutAlign="center center" style="height: 100%;">
+  <div class="login mat-elevation-z12">
+    <form novalidate (ngSubmit)="signIn(emailPassword)" [formGroup]="emailPassword">
+      <div class="login-content" fxLayout="column" fxLayoutAlign="start stretch">
+        <md-input-container floatPlaceholder="never">
+          <input mdInput class="new-input" mdInput type="email" placeholder="Email" required formControlName="email">
+        </md-input-container>
+        <md-input-container floatPlaceholder="never">
+          <input mdInput class="new-input" mdInput type="password" placeholder="Password" required formControlName="password">
+        </md-input-container>
+        <br><br>
+        <button color="primary" md-raised-button [disabled]="!emailPassword.valid">Log in</button>
+        <p class="note">Don't have an account?<br/> <a target="_blank" href="https://retoucher.space/hire/">We are hiring</a></p>
+      </div>
+    </form>
+    <ms-loading-overlay [isLoading]="isLoading"></ms-loading-overlay>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+:host {
+  display: block;
+}
+
+label {
+  display: block;
+  float: left;
+  margin-right: 10px;
+  text-align: left;
+}
+
+.pref-label {
+  width: 120px;
+}
+
+md-input-container {
+  width: 44%;
+  min-width: 400px;
+}
+
+.label-pass {
+  padding-right: 26px;
+}
+
+.preference-title {
+  font-size: 18px;
+  color: #3d4051;
+  margin: 20px 0;
+}

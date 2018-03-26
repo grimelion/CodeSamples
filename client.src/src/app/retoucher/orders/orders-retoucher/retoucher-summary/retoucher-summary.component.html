@@ -1,0 +1,78 @@
+<div class="page-main">
+  <div class="card-main">
+    <md-card-title fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="space-between start">
+      <div>
+        <fa name="file-text-o"></fa>
+        {{ order?.name || 'Order'}} <span class="order-status" [style.backgroundColor]="order?.color">{{order?.statusText}}</span>
+      </div>
+    </md-card-title>
+    <hr>
+    <md-card-content>
+      <div fxLayout="column" fxLayout.gt-sm="row">
+        <div fxFlex="48">
+          <div class="summary-list">
+          <div>
+            <b>Order type:</b> {{order?.description.orderTodoText}}
+          </div>
+          <div>
+            <b>Number of images:</b> {{order?.numberOfImages}}</div>
+          <div *ngIf="order?.description.finalPercentOfImages">
+            <fa name="check-square"></fa>
+            <b>Final number of images (around):</b> {{order.description.finalPercentOfImages}}%
+          </div>
+          <div *ngIf="order?.wantToApprove">
+            <fa name="check"></fa>
+            <b>Approve samples</b>
+          </div>
+          <div>
+            <fa name="pencil-square-o"></fa>
+            <b>Comment:</b>
+            <div>
+              {{ order?.comment }}
+            </div>
+          </div>
+          <div>
+            <b>Deadline:</b> {{order?.retoucherDeadlineAt | date:'short'}}
+          </div>
+          <div>
+            <b>Payment:</b> {{order?.retoucherPrice | uah}}
+          </div>
+          </div>
+          <br>
+          <div>
+            <button color="primary" md-raised-button [routerLink]="['client', order?.userId || '0']"><fa name="camera"></fa>Photographer's style</button>
+          </div>
+          <br>
+          <div *ngIf="order?.moderatorLink">
+            <a [href]="order.moderatorLink" target="_blank">
+              <button color="primary" md-raised-button>
+                <fa name="arrow-circle-o-down"></fa>
+                Download files
+              </button>
+            </a>
+          </div>
+          <br>
+          <md-card *ngIf="order?.upload" >
+            <app-upload-analyzer [order]="order"></app-upload-analyzer>
+          </md-card>
+        </div>
+        <div fxFlex="4"></div>
+        <div fxFlex="48">
+          <app-retoucher-order-actions *ngIf="order && !isNew" [todo]="order" (onLoading)="onLoading($event)"></app-retoucher-order-actions>
+          <md-card *ngIf="isNew">
+            <h4>New order</h4>
+            <p>
+              Do you confirm the order?
+            </p>
+            <div>
+              <button color="primary" md-raised-button (click)="acceptOrder()">Confirm</button>
+              <button color="primary" md-raised-button (click)="dissociateRetoucher()" style="background-color: #ea3d3d">Decline</button>
+            </div>
+          </md-card>
+        </div>
+      </div>
+    </md-card-content>
+    <md-divider></md-divider>
+  </div>
+</div>
+<ms-loading-overlay [isLoading]="isLoading" [fixed]="true"></ms-loading-overlay>

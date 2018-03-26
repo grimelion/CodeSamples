@@ -1,0 +1,26 @@
+<div *ngIf="!showFolders">
+  <button type="button" color="primary" md-raised-button (click)="selectFromDropbox()" class="dropbox-btn">Select <img src="assets/img/db.svg"> folder</button>
+</div>
+<div *ngIf="showFolders">
+  <p style="font-size: 14px;">Select a folder from your Dropbox: </p>
+  <button class="dropbox-back-button" type="button" md-button [disabled]="!(currentDropboxPath | async)" (click)="dropboxPathUp()">
+    <fa name="arrow-left"></fa>Back
+  </button>
+  <table class="table column-filter table-hover table-striped table-condensed table-bordered">
+    <tbody>
+    <tr *ngIf="!(folders | async).length"><td clospan="2">Folder is empty</td></tr>
+    <tr *ngFor="let folder of folders | async" (click)="getFolders(folder.path_display, folder['.tag'])">
+      <td style="width: 250px;">
+        <fa [name]="folder['.tag'] === 'file' ? 'file' : 'folder-open'"></fa> {{ folder.name }}
+      </td>
+      <td>
+        <button class="dropbox-select-button" type="button" md-button (click)="chooseFolder(folder, $event)" *ngIf="folder['.tag'] === 'folder'">
+          Click to select
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<ms-loading-overlay [isLoading]="isLoading" fixed="true"></ms-loading-overlay>
+

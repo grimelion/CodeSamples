@@ -1,0 +1,80 @@
+@import "../../../../styles/_var";
+
+:host {
+  display: block;
+  background: #fff;
+  //background: #fff url('../../../../assets/img/backgrounds/bg.jpg') no-repeat center center fixed;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+}
+
+.register {
+  background: white;
+  width: 380px;
+  .register-header-second {
+    padding: 0 42px;
+    .google-register-button {
+      background-color: #df4a32;
+      width: 100%;
+    }
+    .register-divider-wrapper {
+      width: 100%;
+      height: 13px;
+      margin: 10px 0;
+      border-bottom: 1px solid #ccc;
+      text-align: center;
+
+      .register-divider {
+        font-size: 20px;
+        font-style: italic;
+        background-color: white;
+        padding: 10px;
+      }
+    }
+  }
+
+  .register-header {
+    background: $background-color__sidenav-list;
+    padding: 24px;
+    img {
+      width: 316px;
+    }
+  }
+
+  .register-content {
+    padding: 5px 42px 42px;
+
+    md-input-container {
+      width: 100%;
+    }
+
+    .extra-options {
+      margin: 16px 0 32px;
+
+      .remember-me {
+        color: #777;
+      }
+    }
+
+    a {
+      color: #66c4ca;
+      text-decoration: underline;
+
+      &:hover {
+        color: #5db4ba;
+      }
+    }
+
+    .note {
+      color: #777;
+      margin: 24px 0 0;
+      text-align: center;
+    }
+  }
+}
+
+/deep/ md-input-container .mat-input-wrapper {
+  margin: 9px 0;
+  padding-bottom: 5px;
+}

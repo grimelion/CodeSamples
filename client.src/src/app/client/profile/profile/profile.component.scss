@@ -1,0 +1,77 @@
+:host {
+  display: block;
+}
+
+md-input-container {
+  box-sizing: border-box;
+  width: 26%;
+  min-width: 380px;
+}
+
+.profile-label {
+  display: block;
+  float: left;
+  margin-right: 10px;
+  text-align: right;
+  width: 110px;
+}
+
+md-card {
+  min-height: 500px;
+}
+
+.profile-.gallery-wrapper {
+  border-bottom: 1px solid #bebebe;
+}
+
+.profile-.gallery-wrapper-card {
+  display: inline-block;
+  margin: 2%;
+  vertical-align: top;
+}
+
+i.fa.icon-right-margin {
+  vertical-align: bottom;
+  margin-right: 5px;
+}
+
+@media screen and (max-width: 400px) {
+  .gallery-wrapper div { margin: 0; }
+  .gallery-wrapper { padding: 0; }
+}
+
+textarea {
+  width: 500px;
+  height: 200px;
+  vertical-align: top;
+}
+
+.profile-short {
+  padding: 2%;
+  cursor: pointer;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+td, th {
+    border-bottom: 1px solid #dddddd;
+    text-align: left;
+    padding: 20px;
+}
+
+.label-portfolio {
+  padding-right: 19px;
+}
+
+input.new-input {
+  height: 28px;
+  font-size: 12px;
+}
+
+.tab-content-header {
+  padding-bottom: 20px;
+}

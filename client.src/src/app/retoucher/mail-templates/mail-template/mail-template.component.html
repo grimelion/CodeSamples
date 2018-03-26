@@ -1,0 +1,34 @@
+<div class="page-main">
+  <form [formGroup]="form" (ngSubmit)="save(form)" novalidate>
+    <div fxLayout="column" fxLayoutAlign="start stretch">
+      <md-input-container>
+        <label class="mail-label" mdPrefix>Subject:</label>
+        <input mdInput class="new-input"
+               formControlName="subject"
+               required>
+        <md-hint class="error" *ngIf="!form.get('subject').valid && form.get('subject').touched">
+          Required
+        </md-hint>
+      </md-input-container>
+      <md-input-container>
+        <label class="mail-label" mdPrefix>From:</label>
+        <input mdInput class="new-input"
+               formControlName="from">
+      </md-input-container>
+    </div>
+    Template:
+    <codemirror
+      formControlName="template"
+      [config]="codemirrorConfig">
+    </codemirror>
+    <div fxLayout="column" fxLayoutAlign="start stretch">
+      <br>
+      <md-checkbox formControlName="enabled" >Enabled</md-checkbox>
+      <br>
+    </div>
+    <div class="action-buttons">
+      <button color="primary" md-raised-button [disabled]="!form.valid">Save</button>
+      <button type="button" color="primary" md-raised-button [routerLink]="['../']">Back</button>
+    </div>
+  </form>
+</div>

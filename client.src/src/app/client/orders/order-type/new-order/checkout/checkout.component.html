@@ -1,0 +1,50 @@
+<div class="card-main">
+  <div fxLayout="column" fxLayout.gt-sm="row" style="justify-content: space-between;">
+    <h4 class="checkout-header">Order summary</h4>
+  </div>
+  <md-divider></md-divider>
+  <div fxLayout="column" fxLayout.gt-sm="row" style="padding: 10px 0;">
+    <div class="checkout-list">
+      <div>
+        <fa name="picture-o"></fa>
+        {{recentOrder?.numberOfImages}} images
+      </div>
+      <div>
+        <b>Order name: </b> {{recentOrder?.name}} (#{{ recentOrder?.id }})
+      </div>
+      <div>
+        <b>Order type:</b> {{recentOrder?.description.orderTodoText}}
+      </div>
+      <div *ngIf="recentOrder?.description.finalPercentOfImages">
+        <fa name="check-square"></fa>
+        <b>Final number of images (around):</b> {{recentOrder.description.finalPercentOfImages}}%
+      </div>
+      <div>
+        <fa name="clock-o"></fa>
+        <b>Turnaround time:</b> {{recentOrder?.description.turnaroundTime}}
+      </div>
+      <div *ngIf="recentOrder?.wantToApprove">
+        <fa name="check"></fa>
+        <b>I want to receive samples</b>
+      </div>
+      <div *ngIf="recentOrder?.description.specialOffer">
+        <fa name="check"></fa>
+        <b>Special offer:</b> {{recentOrder?.description.specialOffer}}
+      </div>
+    </div>
+    <div>
+      <div>
+        <fa name="pencil-square-o"></fa>
+        <b>Comment:</b>
+      </div>
+      <div>
+        {{recentOrder?.comment}}
+      </div>
+    </div>
+  </div>
+  <md-divider></md-divider>
+  <div *ngIf="recentOrder" style="padding-top: 10px;">
+    <app-order-pay [order]="recentOrder"></app-order-pay>
+  </div>
+</div>
+<ms-loading-overlay [isLoading]="isLoading" fixed="true"></ms-loading-overlay>

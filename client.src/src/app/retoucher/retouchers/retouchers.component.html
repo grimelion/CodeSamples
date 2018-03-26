@@ -1,0 +1,22 @@
+<div class="page-main">
+  <h3 class="page-header">
+    <fa name="user"></fa>
+    Retouchers
+  </h3>
+  <div class="card-main">
+    <table class="table column-filter table-hover table-striped table-condensed table-bordered mat-elevation-z2"
+           appSortableTable [columns]="columns" (sort)="onOrderSort($event)" tableName="retouchers">
+      <tr *ngFor="let item of retouchers; trackBy: item?.$key" [routerLink]="item?.$key" class="cursor-pointer">
+        <td>{{ item.displayName }}</td>
+        <td>{{ item.email }}</td>
+        <td>{{ item.card }}</td>
+        <td>{{ item.phone }}</td>
+        <td>{{ item.skype }}</td>
+      </tr>
+    </table>
+    <md-card *ngIf="!retouchers.length">
+      No retouchers. Yet.
+    </md-card>
+    <ms-loading-overlay [isLoading]="isLoading"></ms-loading-overlay>
+  </div>
+</div>

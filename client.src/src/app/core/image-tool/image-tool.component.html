@@ -1,0 +1,21 @@
+<div class="gallery-wrapper">
+  <div *ngFor="let photo of photos" class="image-upload">
+    <div class="overlay" fxLayout="row" fxLayoutAlign="center center">
+      <a href="" ng-box [src]="photo.url" [image]="true" [title]="photo.filename" group="group1">
+        <button class="md-fab" md-icon-button>
+          <fa name="search-plus"></fa>
+        </button>
+      </a>
+      <button *ngIf="isEditable" class="md-fab" md-icon-button (click)="removePhoto(photo)">
+        <fa name="trash"></fa>
+      </button>
+    </div>
+    <img [src]="photo.miniUrl" alt="" class="image">
+  </div>
+  <div *ngIf="!photos || !photos.length" class="empty-frames">
+    <div class="empty-frame"></div>
+    <div class="empty-frame"></div>
+    <div class="empty-frame"></div>
+    <div class="empty-frame"></div>
+  </div>
+</div>

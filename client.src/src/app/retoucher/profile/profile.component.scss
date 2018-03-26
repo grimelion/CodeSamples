@@ -1,0 +1,39 @@
+md-input-container {
+    max-width: 400px;
+}
+
+app-image-picker {
+    width: 100px;
+    height: 100px;
+    margin: 0 20px 10px 0;
+}
+
+label {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.display-name-container {
+    .avatar-flex {
+        display: inline-block;
+    }
+    .display-name-content {
+        display: inline-block;
+    }
+}
+
+.profile-label {
+    width: 120px;
+}
+
+.app-image-picker {
+    border-radius: 50%;
+}
+
+.phone-label {
+    padding-right: 28px;
+}
+
+.card-label {
+    padding-right: 40px;
+}

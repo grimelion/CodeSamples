@@ -1,0 +1,161 @@
+<div class="page-main">
+  <h3 class="page-header">
+    {{orderId ? 'Order: #' + orderId : 'Client order'}}
+  </h3>
+    <div class="profile-short" *ngIf="userInfo && (isModerator || isAdmin)">
+        <img [src]="userInfo.photoURL" class="avatar-flex" />
+        <span class="user-name-profile">{{ userInfo.displayName }} ({{ userInfo.email }})</span>
+    </div>
+    <button *ngIf="isSuper" color="primary" style="margin-left: 2%;" md-raised-button [routerLink]="['../']">Back to clients</button>
+    <button *ngIf="!isSuper" color="primary" style="margin-left: 2%; margin-top: 2%;" md-raised-button [routerLink]="['../../']">Back to order</button>
+    <md-tab-group class="profile-tab-content">
+        <md-tab label="Super data" *ngIf="isSuper">
+          <md-card class="tab-content">
+            <form novalidate (ngSubmit)="updateAdminInformation(superFormGroup.value)" [formGroup]="superFormGroup">
+              <h4>
+                <fa name="user"></fa> Assigned admin:
+                <md-select formControlName="assignedAdminId">
+                  <md-option *ngFor="let admin of admins" [value]="admin.$key">
+                    {{admin.displayName}}
+                  </md-option>
+                </md-select>
+              </h4>
+              <h4>
+                <fa name="user"></fa> Assigned moderator:
+                <md-select formControlName="assignedModeratorId">
+                  <md-option *ngFor="let moderator of moderators" [value]="moderator.$key">
+                    {{moderator.displayName}}
+                  </md-option>
+                </md-select>
+              </h4>
+              <div class="tab-content-header">
+                Here are your notes on user visible only to you
+              </div>
+              <br>
+              <h4>
+                <fa name="file-text-o"></fa> Admin only information:
+              </h4>
+              <md-input-container>
+                <textarea cols="60" rows="10" mdInput formControlName="adminComment"></textarea>
+              </md-input-container>
+              <br><br><button color="primary" md-raised-button>SAVE</button>
+            </form>
+          </md-card>
+        </md-tab>
+        <md-tab label="Photographer's profile" *ngIf="isAdmin || this.isModerator">
+            <md-card class="tab-content">
+                <form novalidate (ngSubmit)="setInformation(formGroup.value)" [formGroup]="formGroup">
+                    <h4>
+                        <fa name="file-text-o"></fa> Inner information:
+                    </h4>
+                    <md-input-container>
+                        <textarea cols="60" rows="10" mdInput formControlName="internalInfo"></textarea>
+                    </md-input-container>
+                    <h4>
+                        <fa name="user"></fa> Assigned retoucher:
+                        <md-select formControlName="assignedRetoucherId">
+                            <md-option *ngFor="let retoucher of retouchers" [value]="retoucher.$key">
+                                {{retoucher.displayName}}
+                            </md-option>
+                        </md-select>
+                    </h4>
+                    <md-divider style="margin: 10px auto;"></md-divider>
+                    <md-card-title style="margin: 10px auto;">
+                        <fa name="comment"></fa> Info for retoucher:
+                    </md-card-title>
+                    <md-input-container>
+                        <textarea cols="60" rows="10" mdInput formControlName="retoucherComment"></textarea>
+                    </md-input-container>
+                    <br><br><button color="primary" md-raised-button>SAVE</button>
+                </form>
+            </md-card>
+        </md-tab>
+        <md-tab label="Style examples">
+          <md-card class="tab-content">
+            <app-image-tool isEditable [photos]="photos$ | async"></app-image-tool>
+            <br>
+            <div *ngIf="isAdmin">
+              <br>
+              <h4>
+                <fa name="file-o"></fa>
+                <span>Style instructions</span>
+              </h4>
+              <p>
+                {{ note || 'Client haven\'t left any instructions yet' }}
+              </p>
+            </div>
+            <div *ngIf="isRetoucher && retoucherComment">
+              <br>
+              <h4>
+                <fa name="file-o"></fa>
+                <span>Style instructions</span>
+              </h4>
+              <p>
+                {{ retoucherComment }}
+              </p>
+            </div>
+          </md-card>
+        </md-tab>
+        <md-tab label="Presets / Actions" *ngIf="isModerator || isAdmin">
+            <md-card class="tab-content">
+              <md-card-content>
+                <div>
+                  <h4>
+                    <img class="profile-icon-sm" src="assets/img/lightroom.svg"/><span>Lightroom presets</span>
+                  </h4>
+                  <md-card-content>
+                    <table>
+                      <tr *ngFor="let file of presets$ | async">
+                        <td><a [href]="file.url" [download]="file.filename">{{file.name}}</a></td>
+                        <td>
+                          <p style="display: inline-block; text-align: left">
+                            {{file.description}}
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+                    <div *ngIf="(presets$ | async)?.length === 0">
+                      Client haven't uploaded any presets yet
+                    </div>
+                  </md-card-content>
+                </div>
+                <div *ngIf="(presets$ | async)?.length === 0" style="border-bottom: 1px solid #dddddd;"></div>
+                <div>
+                  <br>
+                  <h4>
+                    <img class="profile-icon-sm" src="assets/img/photoshop.svg"/><span>Photoshop actions</span>
+                  </h4>
+                  <md-card-content>
+                    <table>
+                      <tr *ngFor="let file of actions$ | async">
+                        <td><a [href]="file.url" [download]="file.filename">{{file.name}}</a></td>
+                        <td>
+                          <p style="display: inline-block; text-align: left">
+                            {{file.description}}
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+                    <div *ngIf="(actions$ | async)?.length === 0">
+                      Client haven't uploaded any actions yet
+                    </div>
+                  </md-card-content>
+                </div>
+              </md-card-content>
+            </md-card>
+        </md-tab>
+        <md-tab label="Links" *ngIf="isModerator || isAdmin">
+          <md-card>
+            <div>
+              <span>Portfolio site:</span> <a [href]="userInfo?.portfolio">{{userInfo?.portfolio || 'not set'}}</a>
+            </div>
+            <div>
+              <span>Facebook page:</span> <a [href]="userInfo?.facebookPage">{{userInfo?.facebookPage || 'not set'}}</a>
+            </div>
+            <div>
+              <span>Additional pages:</span> <a [href]="userInfo?.additionalProfiles">{{userInfo?.additionalProfiles || 'not set'}}</a>
+            </div>
+          </md-card>
+        </md-tab>
+    </md-tab-group>
+</div>

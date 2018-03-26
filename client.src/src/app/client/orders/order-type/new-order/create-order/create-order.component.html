@@ -1,0 +1,132 @@
+<div class="card-main order-container">
+  <md-card-content *ngIf="orderOptions">
+    <form style="display: block" novalidate (ngSubmit)="createOrder(order)" [formGroup]="order">
+      <div class="order-main-block" fxLayoutAlign="center start" fxLayout.xs="column">
+        <div class="block-main" fxFlex fxFlex.gt-xs="100" fxFlex.gt-sm="100">
+          <md-card class="child">
+            <h4>
+              <fa name="pencil"></fa>
+              {{ 'new_order' | translate }}
+            </h4>
+            <p *ngIf="isWeddingOrder" style="text-align: justify" class="font-size-15" [innerHTML]="'new_order_wedding_desc' | translate"></p>
+            <p *ngIf="isRetouchingOrder" style="text-align: justify" class="font-size-15" [innerHTML]="'new_order_retouching_desc' | translate"></p>
+            <div>
+              <md-input-container floatPlaceholder="never">
+                <span class="input-prefix" mdPrefix>Name:</span>
+                <input mdInput class="new-input" mdInput type="email" placeholder="Order name" required
+                       formControlName="name">
+                <md-hint class="error" *ngIf="order.get('name').hasError('required') && order.get('name').touched">
+                  Field is required
+                </md-hint>
+              </md-input-container>
+            </div>
+            <md-input-container floatPlaceholder="never">
+              <span class="input-prefix" mdPrefix>Number of images:</span>
+              <input mdInput class="new-input" mdInput min="0" type="number" placeholder="0" required
+                     formControlName="numberOfImages" (keypress)="fixNumberOfImages($event)" [disabled]="disableNumberOfImages">
+              <md-hint class="error"
+                       *ngIf="order.get('numberOfImages').value < minNumberOfImages && order.get('numberOfImages').touched">
+                Field is required (>={{minNumberOfImages}})
+              </md-hint>
+            </md-input-container>
+            <br>
+            <div *ngIf="isWeddingOrder">
+              <div fxLayout="column">
+                <label>Order type</label>
+                <md-select fxFlex formControlName="todo" [disabled]="disableTodo">
+                  <md-option *ngFor="let orderType of orderOptions.weddingOrderTodo" [value]="orderType.value">
+                    {{orderType.name}}
+                  </md-option>
+                </md-select>
+              </div>
+              <div fxLayout="column" *ngIf="showCullingColor">
+                <br>
+                <label>Please specify</label>
+                <md-select fxFlex formControlName="cullingLeave">
+                  <md-option *ngFor="let cc of orderOptions.cullingColor" [value]="cc.value">
+                    {{cc.name}}
+                  </md-option>
+                </md-select>
+              </div>
+              <div *ngIf="showCullingLeave">
+                <br>
+                <label>We cull defective and pick the best ones from duplicated images</label><br>
+                <md-slide-toggle (change)="onCullToggle($event.checked)">I want to specify approximate final number of
+                  images
+                </md-slide-toggle>
+                <br>
+                <md-input-container floatPlaceholder="never" *ngIf="cullingLeave">
+                  <span class="input-prefix" mdPrefix>Leave around:</span>
+                  <input mdInput class="new-input" mdInput type="number" placeholder="30" required
+                         formControlName="cullingLeave">
+                  <span class="input-suffix" mdSuffix>%</span>
+                  <md-hint class="error"
+                           *ngIf="order.get('cullingLeave').hasError('min') && order.get('cullingLeave').touched">
+                    Field is required > 0
+                  </md-hint>
+                  <md-hint class="error"
+                           *ngIf="order.get('cullingLeave').hasError('max') && order.get('cullingLeave').touched">
+                    Field is required < 100
+                  </md-hint>
+                </md-input-container>
+              </div>
+            </div>
+            <div *ngIf="isRetouchingOrder">
+              <div fxLayout="column">
+                <label>Order type</label>
+                <md-select fxFlex formControlName="todo" [disabled]="disableTodo">
+                  <md-option *ngFor="let orderType of orderOptions.retouchingOrderTodo" [value]="orderType.value">
+                    {{orderType.name}}
+                  </md-option>
+                </md-select>
+              </div>
+            </div>
+            <br>
+            <div fxLayout="column">
+              <label>Turnaround time</label>
+              <md-select fxFlex formControlName="turnaroundTime" [disabled]="disableTurnaroundTime">
+                <md-option *ngFor="let time of orderOptions.turnaroundTime" [value]="time.value">
+                  {{time.name}}
+                </md-option>
+              </md-select>
+            </div>
+            <div fxLayout="column" fxLayoutAlign="start stretch" *ngIf="showApprove">
+              <br>
+              <md-checkbox formControlName="wantToApprove" [disabled]="disableApprove">I want to approve edited samples</md-checkbox>
+              <br>
+            </div>
+          </md-card>
+        </div>
+        <div class="block-main" style="margin-right: 4%" fxFlex fxFlex.gt-xs="100" fxFlex.gt-sm="100">
+          <md-card class="child">
+            <h4>
+              <fa name="pencil-square-o"></fa>
+              Order comment
+            </h4>
+            <md-input-container floatPlaceholder="never">
+              <textarea mdInput formControlName="comment"></textarea>
+            </md-input-container>
+            <div fxLayout="column" *ngIf="specialOffers.length">
+              <label>Special offers</label>
+              <md-select fxFlex formControlName="specialOffer" [disabled]="disableSpecialOffers">
+                <md-option *ngFor="let specialOffer of specialOffers" [value]="specialOffer.value">
+                  {{specialOffer.name}}
+                </md-option>
+              </md-select>
+            </div>
+            <div style="padding-top: 20px;">
+              <span style="font-size: 19px; font-weight: bold">Total: {{priceTotal | currency:'USD':true:'1.2-2'}}</span>
+              <br><br>
+              <div fxLayout="column" fxLayoutAlign="start stretch">
+                <md-checkbox *ngIf="trial" formControlName="trial"><b>Trial order</b></md-checkbox>
+              </div>
+              <br>
+              <button color="primary" md-raised-button>Next</button>
+            </div>
+          </md-card>
+        </div>
+      </div>
+    </form>
+  </md-card-content>
+</div>
+<ms-loading-overlay [isLoading]="isLoading" fixed="true"></ms-loading-overlay>

@@ -1,0 +1,12 @@
+<div class="dialog-inner-relative">
+  <div md-dialog-title>Select</div>
+  <div md-dialog-content></div>
+  <div fxLayout="column" *ngIf="columns.length">
+    <md-checkbox *ngFor="let column of columns" [(ngModel)]="column.enabled" [disabled]="column.alwaysShown">
+      {{column.name}}
+    </md-checkbox>
+  </div>
+  <div md-dialog-actions align="end">
+    <button md-button (click)="dialogRef.close()">Ok</button>
+  </div>
+</div>

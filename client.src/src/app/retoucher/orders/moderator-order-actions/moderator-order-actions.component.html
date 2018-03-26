@@ -1,0 +1,77 @@
+<md-card *ngIf="order.retoucherSamplesLink">
+  <h4 class="divider">{{order.retoucherSamplesLink ? 'Completed samples' : 'Samples'}}</h4>
+  <md-card-content>
+    <div>
+      <div>
+      <b>Status:</b> <span class="order-status" [style.backgroundColor]="order.sampleColor">{{order.sampleStatusText}}</span>
+      </div>
+      <div *ngIf="order.clientSamplesCorrections">
+        <b class="bold-label">Client comment:</b>
+        <div class="comment-text">
+          {{ order.clientSamplesCorrections }}
+        </div>
+      </div>
+      <div *ngIf="order.moderatorSamplesCorrections">
+        <b class="bold-label">Moderator comment:</b>
+        <div class="comment-text">
+          {{ order.moderatorSamplesCorrections }}
+        </div>
+      </div>
+      <div *ngIf="order.retoucherSamplesComment">
+        <b class="bold-label">Retoucher comment:</b>
+        <div class="comment-text">
+          {{ order.retoucherSamplesComment }}
+        </div>
+      </div>
+      <br>
+      <a target="_blank" [href]="order.retoucherSamplesLink" color="primary" *ngIf="order.retoucherSamplesLink" md-raised-button><fa name="picture-o"></fa>Check retoucher's samples</a>
+      <br><br>
+      <md-input-container floatPlaceholder="never" class="width-100">
+        <input type="url" [disabled]="notChecking" class="new-input" placeholder="Additional url" mdInput type="url" [(ngModel)]="additionalModeratorSamplesLink">
+      </md-input-container>
+      <div *ngIf="!order.isApproved">
+        <button class="marging-bottom-5" [disabled]="notChecking" color="primary" md-raised-button (click)="approveSamples()">Send to a client</button>
+        <button class="marging-bottom-5" [disabled]="notChecking" color="primary" md-raised-button (click)="additionalCorrections()">Additional corrections</button>
+      </div>
+    </div>
+  </md-card-content>
+</md-card>
+<br>
+<md-card *ngIf="order.retoucherLink">
+  <h4 class="divider">Completed order</h4>
+  <md-card-content>
+    <div>
+      <div>
+        <b>Status:</b> <span class="order-status" [style.backgroundColor]="order.color">{{order.statusText}}</span>
+      </div>
+      <div *ngIf="order.clientCorrections">
+        <b class="bold-label">Client comment:</b>
+        <div class="comment-text">
+          {{ order.clientCorrections }}
+        </div>
+      </div>
+      <div *ngIf="order.moderatorCorrections">
+        <b class="bold-label">Moderator comment:</b>
+        <div class="comment-text">
+          {{ order.moderatorCorrections }}
+        </div>
+      </div>
+      <div *ngIf="order.retoucherComment">
+        <b class="bold-label">Retoucher comment:</b>
+        <div class="comment-text">
+          {{ order.retoucherComment }}
+        </div>
+      </div>
+      <br>
+      <a target="_blank" [href]="order.retoucherLink" color="primary" md-raised-button><fa name="cloud-download"></fa>Check images</a>
+      <br><br>
+      <md-input-container floatPlaceholder="never" class="width-100">
+        <input type="url" [disabled]="notCheckingOrder" class="new-input" placeholder="Additional url" mdInput type="url" [(ngModel)]="additionalModeratorOrderLink">
+      </md-input-container>
+      <div *ngIf="isNotFinished">
+        <button class="marging-bottom-5" [disabled]="notCheckingOrder" color="primary" md-raised-button (click)="approveOrder()">Send to a client</button>
+        <button class="marging-bottom-5" [disabled]="notCheckingOrder" color="primary" md-raised-button (click)="additionalCorrections()">Additional corrections</button>
+      </div>
+    </div>
+  </md-card-content>
+</md-card>

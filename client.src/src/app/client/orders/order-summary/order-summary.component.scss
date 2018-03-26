@@ -1,0 +1,40 @@
+:host {
+  display: block;
+}
+
+.order-date {
+  font-size: 14px;
+  padding-top: 3px;
+  i.fa {
+    font-size: 21px;
+    height: 21px;
+    width: 21px;
+  }
+}
+
+.order-summary-card {
+  display: inline-block;
+  width: 260px;
+  margin: 2%;
+  vertical-align: top;
+
+  .mat-card-title {
+    font-size: 20px;
+  }
+}
+
+.icon-right {
+  margin-right: 5px;
+}
+
+.icon-card {
+  font-size: 40px;
+  text-align: center;
+  width: 100%;
+  margin: auto;
+  display: block;
+}
+
+.card-description {
+  text-align: justify;
+}

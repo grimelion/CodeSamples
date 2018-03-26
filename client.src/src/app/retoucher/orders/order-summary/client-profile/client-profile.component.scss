@@ -1,0 +1,49 @@
+body {
+  color: #fafafa;
+}
+
+md-card {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+md-card-title {
+  font-size: 18px;
+}
+
+.profile-short {
+  padding: 2%;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+label {
+    vertical-align: -webkit-baseline-middle;
+    margin-right: 5px;
+}
+
+md-select {
+  width: 25%;
+}
+
+td, th {
+    border-bottom: 1px solid #dddddd;
+    text-align: left;
+    padding: 20px;
+    text-align: center;
+}
+
+td:first-child {
+  width: 10%;
+}
+
+.user-name-profile {
+    font-weight: 500;
+    margin-left: 5px;
+    vertical-align: top;
+    line-height: 43px;
+}

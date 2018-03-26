@@ -1,0 +1,100 @@
+<div class="page-main">
+  <h3 class="page-header">
+      <fa name="bars"></fa>
+      Order details
+  </h3>
+  <md-card class="card-main">
+    <h4 fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="space-between start">
+      <div>
+        <fa name="file-text-o"></fa>
+        {{order?.name}} (#{{order?.id}}) <span class="order-status" [style.backgroundColor]="order?.color">{{order?.statusText}}</span>
+      </div>
+      <div class="order-date">
+        <fa name="calendar-o"></fa>
+        Order date: {{order?.addedAt | date:'short'}}
+      </div>
+    </h4>
+    <hr>
+    <md-card-content fxLayout="column" fxLayout.gt-sm="row" style="margin-bottom: 0">
+    <div fxFlex class="summary-list">
+      <div>
+        <fa name="picture-o"></fa>
+        {{order?.numberOfImages}} images
+      </div>
+      <div>
+        <b>Order type:</b> {{order?.description.orderTodoText}}
+      </div>
+      <div *ngIf="order?.description.finalPercentOfImages">
+        <fa name="check-square"></fa>
+        <b>Final number of images (around):</b> {{order.description.finalPercentOfImages}}%
+      </div>
+      <div>
+        <fa name="clock-o"></fa>
+        <b>Turnaround time:</b> {{order?.description.turnaroundTime}}
+      </div>
+      <div *ngIf="order?.wantToApprove">
+        <fa name="check"></fa>
+        <b>Approve samples</b>
+      </div>
+      <div *ngIf="order?.description.specialOffer">
+        <fa name="check"></fa>
+        <b>Special offer:</b> {{order?.description.specialOffer}}
+      </div>
+      <div>
+        <fa name="shopping-cart"></fa>
+        <b>Order price</b>: {{order?.price | currency:'USD':true:'1.2-2'}}
+      </div>
+    </div>
+    <div fxFlex>
+      <div>
+        <div>
+          <fa name="pencil-square-o"></fa>
+          <b>Comment:</b>
+        </div>
+        <div>
+          {{order?.comment}}
+        </div>
+      </div>
+    </div>
+      <div *ngIf="isInvalidPayment">
+        Your payment is not valid. Usually it's because the amount paid does not correspond to order price. Please, <a href="mailto:studio@simpleProject.com?subject=InvalidPayment" target="_blank">contact support</a>
+      </div>
+    <br>
+    <div>
+      <div style="padding-bottom: 30px;" *ngIf="!isPending">
+        <fa name="calendar-check-o"></fa>Approx. ready date: <span>{{order?.deadlineAt | date:'shortDate'}}</span>
+      </div>
+    </div>
+    </md-card-content>
+    <div *ngIf="isPending">
+      <app-order-pay [order]="order"></app-order-pay>
+    </div>
+  </md-card>
+  <md-card class="order-summary-card" *ngIf="order?.samplesLink">
+    <fa name="picture-o" class="icon-card"></fa>
+    <md-card-title style="text-align: center;">Samples approval</md-card-title>
+    <p class="card-description">We have prepared the samples for your approval. Please note that we will continue to work with the order right after your approval or additional comments.</p>
+    <a class="width-100" color="primary" [href]="order.samplesLink" target="_blank" md-raised-button>Check samples</a>
+    <div *ngIf="isApproval">
+      <hr>
+      <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="space-between start">
+        <button color="primary" md-raised-button (click)="openDialog(true)" style="background-color: #7CCF00">Approve</button>
+        <button color="primary" md-raised-button (click)="openDialog(false)">Additional corrections</button>
+      </div>
+    </div>
+  </md-card>
+  <md-card class="order-summary-card" *ngIf="order?.finalLink">
+    <fa name="check-square" class="icon-card"></fa>
+    <md-card-title style="text-align: center;">Order is ready</md-card-title>
+    <p class="card-description">Please approve the order after receipt if you’re satisfied with the result. If additional corrections are required, select “Additional corrections". Remember that in a week after being received the order files will be deleted.</p>
+    <a class="width-100"  color="primary" [href]="order.finalLink" target="_blank" md-raised-button>Download</a>
+    <div *ngIf="isReady">
+      <hr>
+      <div class="width-100" fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="space-between start">
+        <button color="primary" md-raised-button (click)="openDialog(true)" style="background-color: #7CCF00">Approve</button>
+        <button color="primary" md-raised-button (click)="openDialog(false)">Additional corrections</button>
+      </div>
+    </div>
+  </md-card>
+</div>
+<ms-loading-overlay [isLoading]="isLoading"></ms-loading-overlay>

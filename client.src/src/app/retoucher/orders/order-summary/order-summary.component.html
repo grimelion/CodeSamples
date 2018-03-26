@@ -1,0 +1,206 @@
+<div class="page-main">
+  <div class="card-main">
+    <div class="order-summary-header" fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="space-between start">
+      <div>
+        <span>{{order?.name}} (#{{order?.id}})</span>
+        <span class="order-status" [style.backgroundColor]="order?.color">{{order?.statusText}}</span>
+      </div>
+      <div class="order-date">
+        <fa name="calendar-o"></fa>
+        Order date: {{order?.addedAt | date:'short'}}
+      </div>
+    </div>
+  </div>
+  <div class="card-main">
+    <div fxLayout="column" fxLayout.gt-sm="row">
+      <div fxFlex="50" *ngIf="order?.description">
+        <div class="summary-list">
+          <div>
+            <b>Order type:</b> {{order.description.orderTodoText}}
+          </div>
+          <div><b>Number of images:</b> {{order.numberOfImages}}</div>
+          <div><b>Client:</b> <a [routerLink]="['client', order?.userId || '0']">{{order?.displayName || order?.email}}</a></div>
+          <div *ngIf="order.description.finalPercentOfImages">
+            <b>Final number of images (around):</b> {{order.description.finalPercentOfImages}}%
+          </div>
+          <div>
+            <fa name="pencil-square-o"></fa>
+            <b>Comment:</b>
+          </div>
+          <div>
+            {{ order.comment }}
+          </div>
+          <div>
+            <fa name="clock-o"></fa>
+            <b>Turnaround time:</b> {{order.description.turnaroundTime}}
+          </div>
+          <div *ngIf="order.description.specialOffer">
+            <fa name="check"></fa>
+            <b>Special offer:</b> {{order.description.specialOffer}}
+          </div>
+          <div *ngIf="order.wantToApprove">
+            <fa name="check"></fa>
+            <b>Approve samples</b>
+          </div>
+          <div *ngIf="isSuper"><b>Order price:</b> {{order?.price | currency:'USD':true:'1.2-2'}}</div>
+        </div>
+        <br>
+        <app-admin-order-actions *ngIf="order.moderatorId && !isSentToRetoucher" [summary]="order" (onLoading)="onLoading($event)"></app-admin-order-actions>
+        <br>
+      </div>
+      <div fxFlex="4"></div>
+      <div fxFlex="46" *ngIf="order">
+        <md-card>
+          <app-upload-analyzer *ngIf="order?.upload" [order]="order"></app-upload-analyzer>
+          <h4 class="divider">
+            Deadlines and pricing
+          </h4>
+          <md-card-content>
+            <div>
+              <div>
+                <fa name="clock-o"></fa>Order date/time: {{ order.addedAt | date:'short' }}
+              </div>
+              <div class="order-summary-input" fxLayout="column" fxLayoutAlign="start stretch">
+                <md-input-container fxLayout="column" fxLayoutAlign="space-between start">
+                  <label class="order-summary-label" mdPrefix><fa name="clock-o"></fa>Ready time:</label>
+                  <input class="new-input" mdInput [mdDatepicker]="picker1" [(ngModel)]="deadlineAt">
+                  <button mdSuffix [mdDatepickerToggle]="picker1"></button>
+                </md-input-container>
+                <md-datepicker #picker1></md-datepicker>
+              </div>
+              <div class="order-summary-input" fxLayout="column" fxLayoutAlign="start stretch">
+                <md-input-container fxLayout="column" fxLayoutAlign="space-between start">
+                  <label class="order-summary-label" mdPrefix><fa name="clock-o"></fa>Retoucher deadline:</label>
+                  <input class="new-input" mdInput [mdDatepicker]="picker2" [(ngModel)]="retoucherDeadlineAt">
+                  <button mdSuffix [mdDatepickerToggle]="picker2"></button>
+                </md-input-container>
+                <md-datepicker #picker2></md-datepicker>
+              </div>
+              <div *ngIf="isSuper">
+                <div class="order-summary-input" fxLayout="column" fxLayoutAlign="start stretch">
+                  <md-input-container fxLayout="column" fxLayoutAlign="space-between start">
+                    <label class="order-summary-label" mdPrefix>Retoucher price:</label>
+                    <input type="number" class="new-input" mdInput [(ngModel)]="retoucherPrice">
+                  </md-input-container>
+                  <md-input-container fxLayout="column" fxLayoutAlign="space-between start">
+                    <label class="order-summary-label" mdPrefix>Moderator price:</label>
+                    <input type="number" class="new-input" mdInput [(ngModel)]="moderatorPrice">
+                  </md-input-container>
+                </div>
+              </div>
+              <div>
+                <button color="primary" md-raised-button (click)="updateDatesAndPrice()">Update</button>
+              </div>
+            </div>
+          </md-card-content>
+          <div *ngIf="!isPending">
+            <form novalidate [formGroup]="assignGroup">
+              <h4 class="divider">
+                Choose retoucher
+              </h4>
+              <md-card-content>
+                <div *ngIf="order.retoucherId">
+                  <div>Assigned to moderator: <a [routerLink]="['retoucher', order.moderatorId || '0']">{{order.moderatorName}}</a></div>
+                  <br>
+                  <div>Assigned to retoucher: <a [routerLink]="['retoucher', order.retoucherId || '0']">{{order.retoucherName}}</a></div>
+                  <br>
+                  <button *ngIf="!isFinished" color="primary" md-raised-button (click)="dissociateRetoucher()">Reassign</button>
+                </div>
+                <div *ngIf="!order.retoucherId">
+                  <md-card-content>
+                    <div>
+                      <div fxLayout="column">
+                        <label>Done by</label>
+                        <md-select fxFlex formControlName="isRemote">
+                          <md-option [value]="0">
+                            Local retoucher
+                          </md-option>
+                          <md-option [value]="1">
+                            Remote retoucher
+                          </md-option>
+                        </md-select>
+                      </div>
+                      <br>
+                      <div *ngIf="assignGroup.get('isRemote').value">
+                        <md-input-container style="width: 100%;">
+                            <label style="width: 40%; vertical-align: middle; padding: 10px 0;">Files link:</label>
+                            <input class="new-input" mdInput type="url" formControlName="moderatorLink">
+                            <md-hint class="error" *ngIf="assignGroup.get('moderatorLink').hasError('url') && assignGroup.get('moderatorLink').touched">
+                              Invalid url
+                            </md-hint>
+                        </md-input-container>
+                      </div>
+                      <div fxLayout="column" *ngIf="retouchers.length">
+                        <label>Retoucher</label>
+                        <md-select fxFlex formControlName="assignedRetoucherId">
+                          <md-option *ngFor="let retoucher of retouchers;" [value]="retoucher.$key">
+                            {{retoucher.displayName}}
+                          </md-option>
+                        </md-select>
+                      </div>
+                      <div fxLayout="column" *ngIf="retouchers.length">
+                        <label>Moderator</label>
+                        <md-select fxFlex formControlName="assignedModeratorId">
+                          <md-option *ngFor="let moderator of moderators;" [value]="moderator.$key">
+                            {{moderator.displayName}}
+                          </md-option>
+                        </md-select>
+                      </div>
+                    </div>
+                    <div><br>
+                      <div class="retoucher-comment">
+                        <fa name="comment"></fa>Retoucher comment:
+                      </div>
+                      <md-input-container floatPlaceholder="never" style="width: 100%">
+                        <textarea mdInput required formControlName="moderatorComment"></textarea>
+                      </md-input-container>
+                      <br>
+                      <button color="primary" md-raised-button [disabled]="!assignGroup.valid" (click)="assignOrder()">Assign</button>
+                    </div>
+                  </md-card-content>
+                </div>
+              </md-card-content>
+            </form>
+          </div>
+          <div *ngIf="isSuper">
+            <h4 class="divider">
+              Choose admin
+            </h4>
+            <md-card-content>
+              <div>
+                <md-card-content>
+                  <div>
+                    <div fxLayout="column">
+                      <label>Admin</label>
+                      <md-select fxFlex [(ngModel)]="adminId">
+                        <md-option *ngFor="let admin of admins;" [value]="admin.$key">
+                          {{admin.displayName}}
+                        </md-option>
+                      </md-select>
+                    </div>
+                  </div>
+                  <div>
+                    <br>
+                    <button color="primary" md-raised-button [disabled]="!adminId" (click)="assignAdmin()">
+                      Reassign
+                    </button>
+                  </div>
+                </md-card-content>
+              </div>
+            </md-card-content>
+          </div>
+          <h4 class="divider">
+            Order actions
+          </h4>
+          <div class="order-actions">
+            <div *ngIf="isSuper"><button [disabled]="!(isPending)" color="primary" md-raised-button (click)="approvePayment()">Approve payment</button><br><br></div>
+            <button [disabled]="!isPending" color="primary" md-raised-button (click)="removeOrder()">Remove order</button><br><br>
+            <button [disabled]="cantSkipSampleApproval" color="primary" md-raised-button (click)="skipSampleApproval()">Skip sample approval</button><br><br>
+            <button [disabled]="!(isReady || isFinished) || !order.upload" color="primary" md-raised-button (click)="removeFiles()">Remove files</button>
+          </div>
+        </md-card>
+      </div>
+    </div>
+  </div>
+</div>
+<ms-loading-overlay [isLoading]="isLoading" [fixed]="true"></ms-loading-overlay>

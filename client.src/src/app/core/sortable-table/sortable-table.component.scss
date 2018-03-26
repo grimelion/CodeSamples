@@ -1,0 +1,96 @@
+@import "../../../styles/_var";
+
+:host {
+  table-layout: fixed;
+}
+
+.table-container {
+  height: 100%;
+}
+
+td, th {
+  box-sizing: border-box;
+}
+
+.table-header {
+  height: 61px;
+  table-layout: fixed;
+  background-color: #fff;
+  color: #757575;
+  border-bottom: 1px solid rgba(0,0,0,.12);
+
+  th {
+    padding: 0 8px;
+  }
+}
+
+:host {
+  &.hide-0 {
+    /deep/ tr > td:first-child,
+    /deep/ tr > th:first-child {
+      display: none;
+    }
+  }
+  &.hide-1 {
+    /deep/ tr > td:nth-child(2),
+    /deep/ tr > th:nth-child(2) {
+      display: none;
+    }
+  }
+  &.hide-2 {
+    /deep/ tr > td:nth-child(3),
+    /deep/ tr > th:nth-child(3) {
+      display: none;
+    }
+  }
+  &.hide-3 {
+    /deep/ tr > td:nth-child(4),
+    /deep/ tr > th:nth-child(4) {
+      display: none;
+    }
+  }
+  &.hide-4 {
+    /deep/ tr > td:nth-child(5),
+    /deep/ tr > th:nth-child(5) {
+      display: none;
+    }
+  }
+  &.hide-5 {
+    /deep/ tr > td:nth-child(6),
+    /deep/ tr > th:nth-child(6) {
+      display: none;
+    }
+  }
+  &.hide-6 {
+    /deep/ tr > td:nth-child(7),
+    /deep/ tr > th:nth-child(7) {
+      display: none;
+    }
+  }
+  &.hide-7 {
+    /deep/ tr > td:nth-child(8),
+    /deep/ tr > th:nth-child(8) {
+      display: none;
+    }
+  }
+  &.hide-8 {
+    /deep/ tr > td:nth-child(9),
+    /deep/ tr > th:nth-child(9) {
+      display: none;
+    }
+  }
+  &.hide-9 {
+    /deep/ tr > td:nth-child(10),
+    /deep/ tr > th:nth-child(10) {
+      display: none;
+    }
+  }
+}
+
+.avatar-cell {
+  text-align: center;
+  width: 40px;
+  padding-left: 24px;
+  padding-right: 8px;
+}
+[hidden] { display: none !important;}

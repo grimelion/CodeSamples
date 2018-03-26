@@ -1,0 +1,18 @@
+<div class="dialog-inner-relative">
+  <button color="primary" md-raised-button (click)="openUpload()"><fa name="upload" class="icon-right"></fa>Choose file</button>&nbsp;&nbsp;
+  <div class="truncate">{{file?.name}}</div>
+  <input id="file-upload" class="custom-file-upload" type="file" value="fileupload" [accept]="extension" (change)="onFilesChanged($event)">
+  <form novalidate [formGroup]="uploadForm">
+    <br>
+    <label>Description: </label>
+    <br>
+    <md-input-container class="file-textarea">
+      <textarea mdInput rows="4" cols="40" maxlength="2000" formControlName="description"></textarea>
+    </md-input-container>
+  </form>
+  <button color="primary" md-raised-button (click)="addFile(uploadForm.value)" [disabled]="!uploadForm.valid || !file"
+          style="margin-right: 10px;">Add
+  </button>
+  <button color="primary" md-raised-button (click)="closeForm()">Close</button>
+  <ms-loading-overlay [isLoading]="isLoading"></ms-loading-overlay>
+</div>

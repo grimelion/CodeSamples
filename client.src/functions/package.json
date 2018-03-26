@@ -1,0 +1,14 @@
+{
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "dependencies": {
+    "@google-cloud/storage": "^1.1.1",
+    "dropbox": "^2.5.2",
+    "firebase-admin": "^4.1.2",
+    "firebase-functions": "^0.5",
+    "hubspot": "^0.4.7",
+    "mailgun-js": "^0.11.1",
+    "nunjucks": "^3.0.0"
+  },
+  "private": true
+}

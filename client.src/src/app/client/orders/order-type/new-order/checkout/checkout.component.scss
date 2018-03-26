@@ -1,0 +1,19 @@
+:host {
+  display: block;
+}
+
+.checkout-header {
+  font-size: 22px;
+  font-weight: normal;
+  margin-bottom: 4px;
+}
+
+.checkout-list {
+  min-width: 50%;
+  flex-grow: 0;
+  flex-shrink: 0;
+
+  > div {
+    padding-bottom: 5px;
+  }
+}

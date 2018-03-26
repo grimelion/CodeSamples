@@ -1,0 +1,100 @@
+@import '~@angular/material/_theming';
+@include mat-core();
+
+$mat-client-palette: (
+  50: #3d4051,
+  100: #fefefe,
+  200: #f48fb1,
+  300: #f06292,
+  400: #ec407a,
+  500: #1eb4bb,
+  600: #d81b60,
+  700: #c2185b,
+  800: #ad1457,
+  900: #880e4f,
+  A100: #ff80ab,
+  A200: #ff4081,
+  A400: #f50057,
+  A700: #c51162,
+  contrast: (
+    50: $black-87-opacity,
+    100: $black-87-opacity,
+    200: $black-87-opacity,
+    300: $black-87-opacity,
+    400: $black-87-opacity,
+    500: white,
+    600: white,
+    700: $white-87-opacity,
+    800: $white-87-opacity,
+    900: $white-87-opacity,
+    A100: $black-87-opacity,
+    A200: white,
+    A400: white,
+    A700: white,
+  )
+);
+$foreground: (
+  base:            white,
+  divider:         $black-12-opacity,
+  dividers:        $black-12-opacity,
+  disabled:        rgba(black, 0.38),
+  disabled-button: rgba(black, 0.38),
+  disabled-text:   rgba(black, 0.38),
+  hint-text:       rgba(black, 0.38),
+  secondary-text:  rgba(black, 0.54),
+  icon:            #1eb4bb,
+  icons:           #1eb4bb,
+  text:            #3d4051,
+  slider-off:        rgba(black, 0.26),
+  slider-off-active: rgba(black, 0.38),
+);
+
+$background: (
+  status-bar: black,
+  app-bar:    map_get($mat-grey, 900),
+  background: white,
+  hover:      rgba(white, 0.04),
+  card:       white,
+  dialog:     white,
+  disabled-button: rgba(#1eb4bb, 0.38),
+  raised-button: map-get($mat-client-palette, 500),
+  focused-button: $white-6-opacity,
+  selected-button: map_get($mat-grey, 900),
+  selected-disabled-button: map_get($mat-grey, 800),
+  disabled-button-toggle: map_get($mat-grey, 1000),
+);
+
+@function client-theme($primary: mat-palette($mat-client-palette), $accent: mat-palette($mat-client-palette), $warn: mat-palette($mat-client-palette)) {
+  @return (
+    primary: $primary,
+    accent: $accent,
+    warn: $warn,
+    is-dark: false,
+    foreground: $foreground,
+    background: $background,
+  );
+}
+
+$theme: client-theme();
+
+@include angular-material-theme($theme);
+//@include angular-material-theme(mat_light-theme(mat-palette($mat-client-palette), mat-palette($mat-client-palette)));
+@import 'styles';
+
+.sidenav-image {
+  height: 30px;
+  margin-bottom: -5px;
+}
+
+.intro-js-title {
+  margin-bottom: 10px;
+  font-size: 18px;
+  width: 400px;
+}
+.intro-js-text {
+  font-size: 14px;
+}
+
+.introjs-tooltip {
+  max-width: 380px !important;
+}

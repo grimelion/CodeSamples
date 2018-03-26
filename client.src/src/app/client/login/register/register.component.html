@@ -1,0 +1,46 @@
+<div fxLayout="row" fxLayoutAlign="center center" style="height: 100%;">
+  <div class="register mat-elevation-z12">
+    <div class="register-header-second" fxLayout="column" fxLayoutAlign="start stretch">
+      <div class="google-register-wrapper">
+        <button class="google-register-button" color="primary"
+                type="button" md-raised-button (click)="signInWithGoogle()"><fa name="google"></fa><span>Sign-up with Google</span></button>
+      </div>
+      <div class="register-divider-wrapper">
+        <span class="register-divider">
+          or
+        </span>
+      </div>
+    </div>
+    <form (ngSubmit)="signUp(emailPasswordConfirm)" [formGroup]="emailPasswordConfirm">
+      <div class="register-content" fxLayout="column" fxLayoutAlign="start stretch">
+        <md-input-container floatPlaceholder="never" class="login">
+          <input mdInput class="new-input lg" mdInput type="text" placeholder="Full name" required formControlName="displayName">
+          <md-hint class="error"
+                   *ngIf="emailPasswordConfirm.get('displayName').hasError('rangeLength') && emailPasswordConfirm.get('displayName').touched">
+            Invalid name
+          </md-hint>
+        </md-input-container>
+        <md-input-container floatPlaceholder="never" class="login">
+          <input mdInput class="new-input lg" mdInput type="email" placeholder="Email" required formControlName="email">
+          <md-hint class="error"
+                   *ngIf="emailPasswordConfirm.get('email').hasError('email') && emailPasswordConfirm.get('email').touched">
+            Invalid email
+          </md-hint>
+        </md-input-container>
+        <md-input-container floatPlaceholder="never" class="login">
+          <input mdInput class="new-input lg" mdInput type="password" required formControlName="password" placeholder="Password">
+          <md-hint class="error"
+                   *ngIf="emailPasswordConfirm.get('password').hasError('rangeLength') && emailPasswordConfirm.get('password').touched">
+            Minimum 6 characters
+          </md-hint>
+        </md-input-container>
+        <!--<div class="extra-options" fxLayout="row" fxLayoutAlign="center center">-->
+          <!--<md-checkbox class="remember-me">I accept the <a href="#">terms and conditions.</a></md-checkbox>-->
+        <!--</div>-->
+        <button color="primary" md-raised-button>CREATE ACCOUNT</button>
+        <p class="note">Already have an account?<br/> <a [routerLink]="['/login']">Sign in here</a></p>
+      </div>
+    </form>
+    <ms-loading-overlay [isLoading]="isLoading"></ms-loading-overlay>
+  </div>
+</div>

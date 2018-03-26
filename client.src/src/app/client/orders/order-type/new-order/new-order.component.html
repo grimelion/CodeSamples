@@ -1,0 +1,26 @@
+<div class="page-main">
+  <div class="steps">
+    <div class="steps-inner">
+      <a class="link-line" routerLinkActive="activated" [routerLinkActiveOptions]="{exact: true}"
+         [routerLink]="'/orders/' + (clientOrder$ | async).type + '/new'">
+        <fa name="pencil" class="icon-rounded">
+        </fa>
+        <span class="add-order-step-span">1.Create order</span>
+      </a>
+      <a class="link-line" routerLinkActive="activated"
+         [routerLink]="'/orders/' + (clientOrder$ | async).type + '/new/files'">
+        <fa name="cloud-upload" class="icon-rounded">
+        </fa>
+        <span class="add-order-step-span" *ngIf="isWeddingOrder">2.Add LR catalog</span>
+        <span class="add-order-step-span" *ngIf="isRetouchingOrder">2.Add Files</span>
+      </a>
+      <a class="link-line" routerLinkActive="activated"
+         [routerLink]="'/orders/' + (clientOrder$ | async).type + '/new/checkout'">
+        <fa name="shopping-cart" class="icon-rounded">
+        </fa>
+        <span class="add-order-step-span">3.Checkout</span>
+      </a>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
+</div>

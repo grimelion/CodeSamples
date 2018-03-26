@@ -1,0 +1,61 @@
+:host {
+  display: inline-block;
+}
+
+.image-upload {
+  display: inline-block;
+  position: relative;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  min-width: 140px;
+  background: #eeeeee;
+
+  img {
+    display: inline-block;
+    width: auto;
+    max-height: 120px;
+  }
+
+  .overlay {
+    min-width: 140px;
+    user-select: none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: rgba(43, 48, 59, 0.18);
+    opacity: 0;
+    cursor: pointer;
+    transition: all .25s ease-in-out;
+
+    .md-fab {
+      color: white;
+      margin: 10px;
+    }
+
+    &.show {
+      opacity: 1;
+    }
+
+    &:hover {
+      opacity: 1;
+      background-color: rgba(154, 176, 210, 0.51);
+    }
+  }
+}
+.empty-frames {
+  height: 96px;
+  user-select: none;
+  overflow: hidden;
+  .empty-frame {
+    display: inline-block;
+    width: 136px;
+    height: 92px;
+    border: 2px dashed #848484;
+    margin-left: 10px;
+    margin-right: 10px;
+    &:first-child {
+      margin-left: 0px;
+    }
+  }
+}

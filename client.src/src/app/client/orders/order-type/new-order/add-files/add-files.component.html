@@ -1,0 +1,94 @@
+<div class="card-main">
+  <h3>
+    <div *ngIf="isWeddingOrder">
+      <fa name="cloud-upload"></fa>
+      {{ 'add_files_wedding' | translate }}
+    </div>
+    <div *ngIf="isRetouchingOrder">
+      <fa name="cloud-upload"></fa>
+      {{ 'add_files_retouching' | translate }}
+    </div>
+  </h3>
+  <div *ngIf="isWeddingOrder" class="font-size-15" [innerHTML]="'add_files_wedding_desc' | translate"></div>
+  <div *ngIf="isRetouchingOrder" class="font-size-15" [innerHTML]="'add_files_retouching_desc' | translate"></div>
+  <div *ngIf="isWeddingOrder && isTrialSet" class="font-size-15">
+    <br>
+    {{ 'add_files_wedding_trial' | translate }}
+  </div>
+</div>
+<md-tab-group class="profile-tab-content">
+  <md-tab label="Upload" [disabled]="isBusy" style="overflow: hidden;">
+    <md-card class="tab-content" style="overflow-y: hidden;">
+      <h1 class="tab-content-header"><fa name="cloud-upload"></fa>Direct upload</h1>
+      <p class="font-size-15">{{ (isWeddingOrder ? 'add_files_wedding_direct' : 'add_files_retouching_direct') | translate }}</p>
+      <app-dragndrop [multiple]="true" accept="*" (outputData)="fileChanged($event)"
+                     [disabled]="isBusy"></app-dragndrop>
+      <div class="upload-progress" *ngIf="progress">
+        {{progress}}%
+        <md-progress-bar [value]="progress"></md-progress-bar>
+      </div>
+      <br>
+      <button md-raised-button color="primary" (click)="setUploading()" [disabled]="isBusy">Next</button>
+    </md-card>
+  </md-tab>
+  <md-tab label="From Dropbox" [disabled]="isBusy">
+    <md-card class="tab-content">
+      <h1 class="tab-content-header"><fa name="dropbox"></fa>{{ 'add_files_dropbox' | translate }}</h1>
+      <p class="font-size-15">{{ 'add_files_dropbox_desc' | translate }}</p>
+      <md-radio-group class="example-radio-group" [(ngModel)]="isShareFolder">
+        <md-radio-button [value]="0" style="margin-bottom: 5px;">
+          Select dropbox folder
+        </md-radio-button>
+        <br>
+        <md-radio-button [value]="1">
+          Use shared folder
+        </md-radio-button>
+      </md-radio-group>
+      <br>
+      <br>
+      <div *ngIf="isShareFolder">
+        <div *ngIf="sharing.link">
+          Sharing folder is set to: <a [href]="sharing.link" target="_blank">{{sharing.name || 'link'}}</a>
+        </div>
+        You can set sharing folder in <a href="/profile/" target="_blank">your profile</a>
+      </div>
+      <div *ngIf="!isShareFolder">
+        <div *ngIf="copying.link">
+          <br> Selected:
+          <fa name="folder-open"></fa>
+          <a [href]="copying.link" target="_blank">{{copying.name}}</a>
+          <br><br>
+        </div>
+        <app-dropbox-select (selected)="filesCopyReferenceGet($event)"></app-dropbox-select>
+      </div>
+      <br><br>
+      <div *ngIf="!isShareFolder">
+        <button md-raised-button color="primary" (click)="setDropbox(copying.copyId)">Next</button>
+      </div>
+      <div *ngIf="isShareFolder">
+        <button md-raised-button color="primary" (click)="setDropbox(sharing.shareId)">Next</button>
+      </div>
+    </md-card>
+  </md-tab>
+  <md-tab label="By a link" [disabled]="isBusy">
+    <md-card class="tab-content">
+      <form novalidate (ngSubmit)="setLinking(url)" [formGroup]="url">
+
+      <h1 class="tab-content-header"><fa name="link"></fa>{{ 'add_files_link' | translate }}</h1>
+      <p class="font-size-15">{{ 'add_files_link_desc' | translate }}</p>
+      <div>
+          <md-input-container floatPlaceholder="never" style="min-width: 30%">
+            <span class="input-prefix" mdPrefix>Url:</span>
+            <input mdInput class="new-input" mdInput type="text" formControlName="otherUrl" required>
+            <md-hint class="error" *ngIf="!url.valid && url.get('otherUrl').touched">
+              Field is required
+            </md-hint>
+          </md-input-container>
+      </div>
+      <br>
+      <button md-raised-button color="primary">Next</button>
+      </form>
+    </md-card>
+  </md-tab>
+</md-tab-group>
+<ms-loading-overlay [isLoading]="isLoading" fixed="true"></ms-loading-overlay>

@@ -1,0 +1,46 @@
+<md-sidenav-container *ngIf="translationsLoaded$ | async">
+  <ngbox></ngbox>
+  <md-sidenav class="sidenav" [opened]="sidenavOpen" align="start" [mode]="sidenavMode" #sidenav>
+
+  </md-sidenav>
+  <md-toolbar class="main-toolbar mat-elevation-z2">
+    <div fxHide="false" fxHide.gt-sm>
+      <button (click)="sidenav.open()" md-icon-button>
+        <fa name="bars"></fa>
+      </button>
+    </div>
+
+    <span fxFlex></span>
+
+    <button class="user-button" md-button [mdMenuTriggerFor]="appMenu">
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <img [src]="(user$ | async)?.photoURL" class="avatar-flex"/>
+        <span fxHide="true" fxHide.gt-sm="false" style="font-weight: 500; margin-left: 5px;">{{(user$ | async)?.displayName}}</span>&nbsp;
+        <fa name="chevron-down" fxHide="true" fxHide.gt-sm="false"></fa>
+      </div>
+    </button>
+
+    <md-menu class="user-menu" x-position="before" y-position="below" #appMenu="mdMenu">
+      <button md-menu-item routerLink="/profile">
+        <fa name="user"></fa>
+        <span>Photographer's profile</span>
+      </button>
+      <button md-menu-item routerLink="/preferences">
+        <fa name="cog"></fa>
+        <span>Preferences</span>
+      </button>
+      <button md-menu-item (click)="openSupport()">
+        <fa name="question-circle"></fa>
+        <span>Support</span>
+      </button>
+      <md-divider></md-divider>
+      <button (click)="signOut()" md-menu-item>
+        <fa name="sign-out"></fa>
+        <span>Logout</span>
+      </button>
+    </md-menu>
+  </md-toolbar>
+  <div class="main-container" #scrollContainer>
+    <router-outlet></router-outlet>
+  </div>
+</md-sidenav-container>

@@ -1,0 +1,68 @@
+<div class="page-main">
+  <h3 class="page-header">
+    <fa name="cog"></fa>
+    Preferences
+  </h3>
+  <form novalidate (ngSubmit)="sendData()" [formGroup]="formGroup">
+    <md-card class="card-main">
+      <h4>
+        <fa name="user"></fa>
+        Profile image
+      </h4>
+        <br>
+        <md-card-content>
+          <app-image-picker rounded [imageUrl]="userImagePhotoURL" class="image-picker" (choose)="onUserImageFile($event)"
+                            width="100" height="100" md-tooltip="Choose an image">
+          </app-image-picker>
+        </md-card-content>
+        <br>
+        <h4>
+          <fa name="unlock-alt"></fa>
+          Email and password
+        </h4>
+        <md-card-content>
+          <div fxLayout="column" fxLayoutAlign="start stretch">
+            <md-input-container floatPlaceholder="never">
+              <label class="pref-label" mdPrefix>Email:</label>
+              <input id="email" mdInput class="new-input" type="email" placeholder="user@example.com" required
+                    formControlName="email" pristine>
+              <md-hint class="error" *ngIf="email.get('email').hasError('email') && email.get('email').touched">
+                Invalid email
+              </md-hint>
+            </md-input-container>
+          </div>
+          <div fxLayout="column" fxLayoutAlign="start stretch" [formGroup]="password">
+            <md-input-container>
+              <label class="pref-label" mdPrefix>New password:</label>
+              <input class="new-input" mdInput type="password" required formControlName="password">
+              <md-hint class="error"
+                      *ngIf="password.get('password').hasError('rangeLength') && password.get('password').touched">
+                Minimum 6 characters
+              </md-hint>
+            </md-input-container>
+            <md-input-container>
+              <label class="pref-label" mdPrefix>Confirm password:</label>
+              <input class="new-input" mdInput type="password" required formControlName="passwordConfirm">
+              <md-hint class="error"
+                      *ngIf="password.get('passwordConfirm').hasError('equalTo') && password.get('passwordConfirm').touched">
+                Passwords are not identical
+              </md-hint>
+            </md-input-container>
+            <br>
+          </div>
+        </md-card-content>
+        <h4>
+          <fa name="envelope-o"></fa>
+          Notifications
+        </h4>
+        <div fxLayout="column" fxLayoutAlign="start stretch" [formGroup]="notifications">
+          <md-checkbox formControlName="emailOrderCreated">Send notifications when a new order is placed.</md-checkbox>
+          <md-checkbox formControlName="emailOrderApprove">Send notifications when samples are ready.</md-checkbox>
+          <md-checkbox formControlName="emailOrderReady">Send notifications when order is ready.</md-checkbox>
+          <br>
+        </div>
+        <button color="primary" md-raised-button>Save</button>
+    </md-card>
+  </form>
+</div>
+<ms-loading-overlay [isLoading]="isLoading" fixed="true"></ms-loading-overlay>

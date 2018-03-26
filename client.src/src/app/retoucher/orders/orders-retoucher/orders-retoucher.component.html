@@ -1,0 +1,32 @@
+<div class="page-main">
+  <h3 class="page-header">
+    <fa name="bars"></fa>
+    My orders
+  </h3>
+  <div class="card-main">
+    <button class="md-fab" md-icon-button (click)="ordersTable.openFilter()" mdTooltip="Filter">
+      <fa name="filter" class="icon-right"></fa>
+    </button>
+    <table class="table column-filter table-hover table-striped table-condensed table-bordered mat-elevation-z2"
+          appSortableTable [columns]="columns" (sort)="onOrderSort($event)" tableName="todos" #ordersTable>
+      <tr *ngFor="let item of orders; trackBy: item?.$key; let i=index" [routerLink]="'summary/' + item?.$key" class="cursor-pointer">
+        <td>{{ item.name }}</td>
+        <td>
+          <span class="order-status" [style.backgroundColor]="item.color">{{item.statusText}}</span>
+        </td>
+        <td>
+          <span *ngIf="item.sampleStatusText" class="order-status" [style.backgroundColor]="item.sampleColor">{{item.sampleStatusText}}</span>
+        </td>
+        <td>
+          {{ item.numberOfImages }}
+        </td>
+        <td>{{ item.description.orderTodoText }}</td>
+        <td>{{ item.retoucherDeadlineAt | date:'short'}}</td>
+      </tr>
+    </table>
+    <md-card *ngIf="!orders.length">
+      No orders to do for you. Take a nap
+    </md-card>
+  </div>
+  <ms-loading-overlay [isLoading]="isLoading"></ms-loading-overlay>
+</div>
